@@ -10,6 +10,12 @@ import {
   InfoRequestInput,
   infoRequestSchema,
 } from '@/server/validators/claim.schema';
+import {
+  mapProductItemToDTO,
+  mapAttachmentToDTO,
+  mapClaimToDTO,
+} from '@/lib/claims-mapper';
+
 
 export type ClaimStatus =
   | 'REGISTERED'
@@ -191,78 +197,6 @@ export async function generateClaimNumber(type: ClaimType): Promise<string> {
   return `${prefix}${seq}`;
 }
 
-export function mapProductItemToDTO(item: any): ClaimProductItemDTO {
-  return {
-    id: item.id,
-    claimId: item.claimId,
-    productId: item.productId ?? null,
-    productArticle: item.productArticle,
-    productName: item.productName,
-    producerName: item.producerName ?? null,
-    country: item.country ?? null,
-    productionDate: item.productionDate ? new Date(item.productionDate).toISOString() : null,
-    lotNumber: item.lotNumber ?? null,
-    vehicleNumber: item.vehicleNumber ?? null,
-    nonConformWeightKg: Number(item.nonConformWeightKg),
-    receivedQuantityKg: item.receivedQuantityKg != null ? Number(item.receivedQuantityKg) : null,
-  };
-}
-
-export function mapAttachmentToDTO(att: any): ClaimAttachmentDTO {
-  return {
-    id: att.id,
-    claimId: att.claimId,
-    fileName: att.fileName,
-    fileUrl: att.fileUrl,
-    fileSizeBytes: att.fileSizeBytes,
-    createdAt: new Date(att.createdAt).toISOString(),
-  };
-}
-
-export function mapClaimToDTO(record: any): ClaimDTO {
-  let authorName = 'Portal User';
-  if (record.submittedBy) {
-    const parts = [record.submittedBy.firstName, record.submittedBy.lastName].filter(Boolean);
-    if (parts.length > 0) {
-      authorName = parts.join(' ');
-    }
-  }
-
-  return {
-    id: record.id,
-    claimNumber: record.claimNumber,
-    companyId: record.companyId,
-    companyName: record.company?.name || 'Company',
-    submittedById: record.submittedById,
-    submittedByName: authorName,
-    submittedByEmail: record.submittedBy?.email,
-    type: record.type as ClaimType,
-    status: record.status as ClaimStatus,
-    subject: record.subject,
-    categoryOfRequest: record.categoryOfRequest ?? null,
-    supplierName: record.supplierName ?? null,
-    infoCategory: record.infoCategory ?? null,
-    targetCountry: record.targetCountry ?? null,
-    requestedShelfLifeDate: record.requestedShelfLifeDate
-      ? new Date(record.requestedShelfLifeDate).toISOString()
-      : null,
-    reasonForShelfLifeExtension: record.reasonForShelfLifeExtension ?? null,
-    shelfLifeExtensionVolumeKg:
-      record.shelfLifeExtensionVolumeKg != null ? Number(record.shelfLifeExtensionVolumeKg) : null,
-    shipmentId: record.shipmentId ?? null,
-    containerNumber: record.containerNumber ?? null,
-    invoiceNumber: record.invoiceNumber ?? null,
-    deliveryDate: record.deliveryDate ? new Date(record.deliveryDate).toISOString() : null,
-    description: record.description ?? null,
-    additionalEmails: record.additionalEmails ?? null,
-    companyResponse: record.companyResponse ?? null,
-    resolvedAt: record.resolvedAt ? new Date(record.resolvedAt).toISOString() : null,
-    products: Array.isArray(record.products) ? record.products.map(mapProductItemToDTO) : [],
-    attachments: Array.isArray(record.attachments) ? record.attachments.map(mapAttachmentToDTO) : [],
-    createdAt: new Date(record.createdAt).toISOString(),
-    updatedAt: new Date(record.updatedAt).toISOString(),
-  };
-}
 
 /**
  * Fetch list of claims/requests with filtering, searching, and pagination

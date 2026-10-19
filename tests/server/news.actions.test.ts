@@ -7,9 +7,9 @@ import {
   getNewsArticleBySlug,
   getAllNewsArticles,
   getRelatedNewsArticles,
-  formatNewsDate,
-  calculateReadTime,
 } from '@/server/actions/news.actions';
+import { formatNewsDate, calculateReadTime } from '@/lib/utils';
+
 
 vi.mock('@/lib/prisma', () => ({
   prisma: {

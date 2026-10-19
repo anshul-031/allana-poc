@@ -22,8 +22,10 @@ export default defineConfig({
         statements: 90,
         perFile: true,
       },
+      include: ['src/**/*.{ts,tsx}'],
       exclude: [
         'node_modules/**',
+        '.next/**',
         'dist/**',
         'prisma/**',
         'scripts/**',
@@ -35,6 +37,7 @@ export default defineConfig({
         'src/lib/prisma.ts',
         'src/app/layout.tsx',
       ],
+
     },
   },
 });

@@ -76,8 +76,10 @@ const defaultLogs: AuditLogEntry[] = [
   },
 ];
 
-export default function ActionLogPage({ initialLogs = defaultLogs }: ActionLogPageProps) {
+export default function ActionLogPage(props?: any) {
+  const initialLogs = props?.initialLogs || defaultLogs;
   const [logs] = useState<AuditLogEntry[]>(initialLogs);
+
 
   return (
     <div className="action-log-page-container">

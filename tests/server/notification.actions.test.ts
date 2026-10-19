@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as notificationActions from '@/server/actions/notification.actions';
+import { formatNotificationTimestamp } from '@/lib/utils';
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
@@ -29,27 +30,28 @@ describe('notification.actions Server Actions', () => {
 
   describe('formatNotificationTimestamp', () => {
     it('returns empty string on null, undefined, or empty input', () => {
-      expect(notificationActions.formatNotificationTimestamp(null)).toBe('');
-      expect(notificationActions.formatNotificationTimestamp(undefined)).toBe('');
-      expect(notificationActions.formatNotificationTimestamp('')).toBe('');
+      expect(formatNotificationTimestamp(null)).toBe('');
+      expect(formatNotificationTimestamp(undefined)).toBe('');
+      expect(formatNotificationTimestamp('')).toBe('');
     });
 
     it('returns empty string on invalid date string', () => {
-      expect(notificationActions.formatNotificationTimestamp('not-a-valid-date')).toBe('');
+      expect(formatNotificationTimestamp('not-a-valid-date')).toBe('');
     });
 
     it('formats valid ISO date string correctly', () => {
       const date = new Date(2026, 9, 19, 14, 30, 45); // 19 Oct 2026 14:30:45
-      const res = notificationActions.formatNotificationTimestamp(date.toISOString());
+      const res = formatNotificationTimestamp(date.toISOString());
       expect(res).toBe('19.10.2026 14:30:45');
     });
 
     it('formats valid Date object correctly', () => {
       const date = new Date(2026, 0, 5, 8, 5, 9); // 05 Jan 2026 08:05:09
-      const res = notificationActions.formatNotificationTimestamp(date);
+      const res = formatNotificationTimestamp(date);
       expect(res).toBe('05.01.2026 08:05:09');
     });
   });
+
 
   describe('getUserNotifications', () => {
     it('returns error if userId is missing', async () => {

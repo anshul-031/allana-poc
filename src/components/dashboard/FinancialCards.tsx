@@ -6,8 +6,9 @@ import {
   GetFinancialsResult,
   FinancialMetricDTO,
   getCompanyFinancials,
-  formatCurrencyAmount,
 } from '@/server/actions/financials.actions';
+import { formatCurrencyAmount } from '@/lib/utils';
+
 
 export interface FinancialCardsProps {
   initialData?: GetFinancialsResult;

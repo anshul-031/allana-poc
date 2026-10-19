@@ -10,11 +10,13 @@ import {
   GetLicensesResult,
 } from '@/server/actions/licenses.actions';
 
-export interface LicensesPageProps {
+export type LicensesPageProps = {
   initialData?: GetLicensesResult;
-}
+};
 
-export default function LicensesPage({ initialData }: LicensesPageProps) {
+export default function LicensesPage(props?: any) {
+  const initialData = props?.initialData;
+
   const [data, setData] = useState<GetLicensesResult | null>(initialData || null);
   const [isLoading, setIsLoading] = useState(!initialData);
   const [isModalOpen, setIsModalOpen] = useState(false);

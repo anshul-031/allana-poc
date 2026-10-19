@@ -8,8 +8,9 @@ import {
   markNotificationAsRead,
   markAllNotificationsAsRead,
   setNotificationReadStatus,
-  formatNotificationTimestamp,
 } from '@/server/actions/notification.actions';
+import { formatNotificationTimestamp } from '@/lib/utils';
+
 
 export interface NotificationDrawerProps {
   userId?: string;

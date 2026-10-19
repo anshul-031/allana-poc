@@ -1,4 +1,7 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import fs from 'fs';
+import path from 'path';
+
 
 const r2 = new S3Client({
   region: 'auto',
@@ -100,7 +103,17 @@ const MOCK_ASSETS: MockAsset[] = [
     description: 'Dubai Municipality Food Trade Registration Certificate',
     content: Buffer.from('%PDF-1.4 Dubai Municipality Food Safety Department Import Permit.'),
   },
+  // Official Portal User Manual (from docs/user_manual.pdf)
+  {
+    key: 'manuals/allana-user-manual.pdf',
+    contentType: 'application/pdf',
+    description: 'Allana Customer Portal Official User Manual & Operational Specification',
+    content: fs.existsSync(path.resolve(process.cwd(), 'docs/user_manual.pdf'))
+      ? fs.readFileSync(path.resolve(process.cwd(), 'docs/user_manual.pdf'))
+      : Buffer.from('%PDF-1.4 Allana Customer Portal User Manual'),
+  },
 ];
+
 
 export async function seedR2Storage() {
   console.log(`Starting mock asset upload to Cloudflare R2 bucket: "${BUCKET}"...`);
@@ -127,8 +140,11 @@ export async function seedR2Storage() {
   console.log(`Finished seeding ${MOCK_ASSETS.length} mock objects to Cloudflare R2.`);
 }
 
-// Allow direct CLI execution: ts-node scripts/seed-r2.ts
-if (require.main === module) {
+// Allow direct CLI execution: tsx scripts/seed-r2.ts
+if (
+  (typeof require !== 'undefined' && require.main === module) ||
+  (typeof process !== 'undefined' && process.argv[1] && process.argv[1].includes('seed-r2'))
+) {
   seedR2Storage().catch((err) => {
     console.error('Failed to seed R2 storage:', err);
     process.exit(1);

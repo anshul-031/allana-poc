@@ -80,14 +80,14 @@ const defaultManager: ManagerInfo = {
   location: 'Allana Corporate Center, Dubai Trade Hub & Allanasons House Mumbai',
 };
 
-export default function ProfilePage({
-  initialCompany = defaultCompany,
-  initialRelatedCompanies = defaultRelatedCompanies,
-  initialManager = defaultManager,
-  userId = 'u-lulu-buyer-1',
-}: ProfilePageProps) {
+export default function ProfilePage(props?: any) {
+  const initialCompany = props?.initialCompany ?? defaultCompany;
+  const initialRelatedCompanies = props?.initialRelatedCompanies ?? defaultRelatedCompanies;
+  const initialManager = props?.initialManager ?? defaultManager;
+  const userId = props?.userId ?? 'u-lulu-buyer-1';
   const [company] = useState<RelatedCompanyDTO>(initialCompany);
   const [relatedCompanies] = useState<RelatedCompanyDTO[]>(initialRelatedCompanies);
+
   const [manager] = useState<ManagerInfo>(initialManager);
 
   return (

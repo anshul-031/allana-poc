@@ -2,6 +2,8 @@
 
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
+import { formatNotificationTimestamp } from '@/lib/utils';
+
 
 export interface NotificationDTO {
   id: string;
@@ -128,23 +130,7 @@ export async function markAllNotificationsAsRead(userId?: string): Promise<{
   }
 }
 
-/**
- * Format timestamp into DD.MM.YYYY HH:MM:SS format
- */
-export function formatNotificationTimestamp(dateInput?: string | Date | null): string {
-  if (!dateInput) return '';
-  const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
-  if (isNaN(d.getTime())) return '';
 
-  const day = String(d.getDate()).padStart(2, '0');
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const year = d.getFullYear();
-  const hours = String(d.getHours()).padStart(2, '0');
-  const minutes = String(d.getMinutes()).padStart(2, '0');
-  const seconds = String(d.getSeconds()).padStart(2, '0');
-
-  return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
-}
 
 /**
  * Create a new notification for a user

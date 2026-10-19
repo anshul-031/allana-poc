@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as licensesActions from '@/server/actions/licenses.actions';
+import {
+  isRegulatedJurisdictionCountry,
+  calculateLicenseStatus,
+} from '@/lib/licenses-util';
 import { prisma } from '@/lib/prisma';
 import { createPresignedDownloadUrl } from '@/lib/r2';
 import { cookies } from 'next/headers';
@@ -43,37 +47,38 @@ describe('licenses.actions Server Actions (FEAT-1.7)', () => {
 
   describe('Utility Functions', () => {
     it('isRegulatedJurisdictionCountry correctly identifies regulated and non-regulated countries', () => {
-      expect(licensesActions.isRegulatedJurisdictionCountry('Saudi Arabia')).toBe(true);
-      expect(licensesActions.isRegulatedJurisdictionCountry('KSA')).toBe(true);
-      expect(licensesActions.isRegulatedJurisdictionCountry('United Arab Emirates')).toBe(true);
-      expect(licensesActions.isRegulatedJurisdictionCountry('UAE')).toBe(true);
-      expect(licensesActions.isRegulatedJurisdictionCountry('Qatar')).toBe(true);
-      expect(licensesActions.isRegulatedJurisdictionCountry('Kuwait')).toBe(true);
-      expect(licensesActions.isRegulatedJurisdictionCountry('Egypt')).toBe(true);
-      expect(licensesActions.isRegulatedJurisdictionCountry('Germany')).toBe(false);
-      expect(licensesActions.isRegulatedJurisdictionCountry(undefined)).toBe(false);
+      expect(isRegulatedJurisdictionCountry('Saudi Arabia')).toBe(true);
+      expect(isRegulatedJurisdictionCountry('KSA')).toBe(true);
+      expect(isRegulatedJurisdictionCountry('United Arab Emirates')).toBe(true);
+      expect(isRegulatedJurisdictionCountry('UAE')).toBe(true);
+      expect(isRegulatedJurisdictionCountry('Qatar')).toBe(true);
+      expect(isRegulatedJurisdictionCountry('Kuwait')).toBe(true);
+      expect(isRegulatedJurisdictionCountry('Egypt')).toBe(true);
+      expect(isRegulatedJurisdictionCountry('Germany')).toBe(false);
+      expect(isRegulatedJurisdictionCountry(undefined)).toBe(false);
     });
 
     it('calculateLicenseStatus correctly classifies ACTIVE, EXPIRING_SOON, and EXPIRED', () => {
       // 100 days in the future
       const futureDate = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
-      const activeRes = licensesActions.calculateLicenseStatus(futureDate);
+      const activeRes = calculateLicenseStatus(futureDate);
       expect(activeRes.status).toBe('ACTIVE');
       expect(activeRes.daysRemaining).toBeGreaterThan(60);
 
       // 30 days in the future
       const soonDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-      const soonRes = licensesActions.calculateLicenseStatus(soonDate);
+      const soonRes = calculateLicenseStatus(soonDate);
       expect(soonRes.status).toBe('EXPIRING_SOON');
       expect(soonRes.daysRemaining).toBeLessThanOrEqual(60);
       expect(soonRes.daysRemaining).toBeGreaterThan(0);
 
       // 5 days in the past
       const pastDate = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-      const expiredRes = licensesActions.calculateLicenseStatus(pastDate);
+      const expiredRes = calculateLicenseStatus(pastDate);
       expect(expiredRes.status).toBe('EXPIRED');
       expect(expiredRes.daysRemaining).toBeLessThanOrEqual(0);
     });
+
 
     it('getActiveCompanyIdFromCookies returns cookie value or null on exception', async () => {
       vi.mocked(cookies).mockResolvedValue({

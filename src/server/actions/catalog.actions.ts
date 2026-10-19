@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { formatPackagingSummary } from '@/lib/utils';
 
 export interface CatalogSearchProductDTO {
   id: string;
@@ -26,20 +27,6 @@ export interface CatalogSearchResult {
   error?: string;
 }
 
-/**
- * Format packaging secondary line matching enterprise export specifications
- * e.g. "vacuum film 2,0 kg, corrugated box 12 kg, TM \"Allana\""
- */
-export function formatPackagingSummary(product: {
-  primaryPackaging?: string | null;
-  cartonNetWeightKg?: number | string | any;
-  brand?: string | null;
-}): string {
-  const packType = product.primaryPackaging || 'vacuum film';
-  const weight = product.cartonNetWeightKg ? `${product.cartonNetWeightKg} kg` : 'standard';
-  const brandName = product.brand || 'Allana';
-  return `${packType}, corrugated box ${weight}, TM "${brandName}"`;
-}
 
 interface RawProductRecord {
   id: string;

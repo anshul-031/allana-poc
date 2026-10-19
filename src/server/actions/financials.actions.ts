@@ -32,21 +32,7 @@ export interface GetFinancialsResult {
   error?: string;
 }
 
-/**
- * Format currency amount with proper sign, thousand separators, and ISO currency code
- * e.g. -272796.96 => "-$272,796.96 USD", 1079500 => "$1,079,500.00 USD"
- */
-export function formatCurrencyAmount(amount: number, currency = 'USD'): string {
-  const isNegative = amount < 0;
-  const absFormatted = Math.abs(amount).toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
 
-  return isNegative
-    ? `-$${absFormatted} ${currency}`
-    : `$${absFormatted} ${currency}`;
-}
 
 export async function getActiveCompanyIdFromCookies(): Promise<string | null> {
   try {

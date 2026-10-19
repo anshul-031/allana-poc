@@ -4,9 +4,6 @@ import { cookies } from 'next/headers';
 import {
   getActiveCompanyIdFromCookies,
   generateClaimNumber,
-  mapClaimToDTO,
-  mapProductItemToDTO,
-  mapAttachmentToDTO,
   getClaimsList,
   getClaimDetails,
   lookupProductByArticle,
@@ -15,6 +12,12 @@ import {
   getClaimAttachmentPresignedUrl,
   getClaimantProfile,
 } from '@/server/actions/claims.actions';
+import {
+  mapClaimToDTO,
+  mapProductItemToDTO,
+  mapAttachmentToDTO,
+} from '@/lib/claims-mapper';
+
 import {
   qualityClaimSchema,
   infoRequestSchema,

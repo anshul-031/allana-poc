@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import NewsCard, { getArticleCategory } from '@/components/news/NewsCard';
-import { NewsArticleDTO, formatNewsDate, calculateReadTime } from '@/server/actions/news.actions';
+import { NewsArticleDTO } from '@/server/actions/news.actions';
+import { formatNewsDate, calculateReadTime } from '@/lib/utils';
+
 
 export interface ArticleDetailViewProps {
   article: NewsArticleDTO | null;

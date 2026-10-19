@@ -20,9 +20,10 @@ import {
   getCatalogProducts,
 } from '@/server/actions/catalog.actions';
 
-export default function CatalogPage() {
+function CatalogContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
 
   // Filter state synced from URL
   const [filterState, setFilterState] = useState<CatalogFilterState>(() =>
@@ -184,3 +185,12 @@ export default function CatalogPage() {
     </div>
   );
 }
+
+export default function CatalogPage() {
+  return (
+    <React.Suspense fallback={<div style={{ padding: '40px', textAlign: 'center' }}>Loading Catalog...</div>}>
+      <CatalogContent />
+    </React.Suspense>
+  );
+}
+

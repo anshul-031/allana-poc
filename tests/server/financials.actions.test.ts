@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as financialsActions from '@/server/actions/financials.actions';
+import { formatCurrencyAmount } from '@/lib/utils';
 import { prisma } from '@/lib/prisma';
 import { cookies } from 'next/headers';
 
@@ -22,12 +23,13 @@ describe('financials.actions Server Actions (FEAT-2.2)', () => {
 
   describe('formatCurrencyAmount', () => {
     it('formats positive and negative amounts with thousand separators and ISO currency code', () => {
-      expect(financialsActions.formatCurrencyAmount(1079500)).toBe('$1,079,500.00 USD');
-      expect(financialsActions.formatCurrencyAmount(-272796.96)).toBe('-$272,796.96 USD');
-      expect(financialsActions.formatCurrencyAmount(0)).toBe('$0.00 USD');
-      expect(financialsActions.formatCurrencyAmount(450.5, 'EUR')).toBe('$450.50 EUR');
+      expect(formatCurrencyAmount(1079500)).toBe('$1,079,500.00 USD');
+      expect(formatCurrencyAmount(-272796.96)).toBe('-$272,796.96 USD');
+      expect(formatCurrencyAmount(0)).toBe('$0.00 USD');
+      expect(formatCurrencyAmount(450.5, 'EUR')).toBe('$450.50 EUR');
     });
   });
+
 
   describe('getActiveCompanyIdFromCookies', () => {
     it('returns company ID from cookie store', async () => {

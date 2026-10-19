@@ -7,7 +7,8 @@ import {
   ShipmentStatusType,
   getRecentShipments,
 } from '@/server/actions/shipments.actions';
-import { formatCurrencyAmount } from '@/server/actions/financials.actions';
+import { formatCurrencyAmount } from '@/lib/utils';
+
 
 export interface RecentShipmentsWidgetProps {
   initialShipments?: ShipmentSummaryDTO[];

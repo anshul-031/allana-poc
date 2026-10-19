@@ -1,10 +1,9 @@
 import React from 'react';
 import { Metadata } from 'next';
 import NewsListingView from '@/components/news/NewsListingView';
-import {
-  getAllNewsArticles,
-  FALLBACK_NEWS_ARTICLES,
-} from '@/server/actions/news.actions';
+import { getAllNewsArticles } from '@/server/actions/news.actions';
+import { FALLBACK_NEWS_ARTICLES } from '@/lib/fallback-news';
+
 
 export const metadata: Metadata = {
   title: 'Export News & Market Insights | Allana Customer Portal',

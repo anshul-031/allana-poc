@@ -2,7 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { NewsArticleDTO, formatNewsDate, calculateReadTime } from '@/server/actions/news.actions';
+import { NewsArticleDTO } from '@/server/actions/news.actions';
+import { formatNewsDate, calculateReadTime } from '@/lib/utils';
+
 
 export interface NewsCardProps {
   article: NewsArticleDTO;

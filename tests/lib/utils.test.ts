@@ -5,7 +5,13 @@ import {
   formatWeight,
   cn,
   calculateDelta,
+  formatPackagingSummary,
+  formatCurrencyAmount,
+  formatNewsDate,
+  calculateReadTime,
+  formatNotificationTimestamp,
 } from '@/lib/utils';
+
 
 describe('src/lib/utils.ts - Export Portal Helpers', () => {
   describe('formatUSD', () => {
@@ -93,4 +99,76 @@ describe('src/lib/utils.ts - Export Portal Helpers', () => {
       expect(res.formatted).toBe('0.00');
     });
   });
+
+  describe('formatPackagingSummary', () => {
+    it('formats summary with complete product details', () => {
+      const summary = formatPackagingSummary({
+        primaryPackaging: 'Vacuum Pack (IWP)',
+        cartonNetWeightKg: 20,
+        brand: 'Allana',
+      });
+      expect(summary).toBe('Vacuum Pack (IWP), corrugated box 20 kg, TM "Allana"');
+    });
+
+    it('applies fallback defaults when optional properties are omitted', () => {
+      const summary = formatPackagingSummary({});
+      expect(summary).toBe('vacuum film, corrugated box standard, TM "Allana"');
+    });
+  });
+
+  describe('formatCurrencyAmount', () => {
+    it('formats positive and negative amounts with currency code', () => {
+      expect(formatCurrencyAmount(1079500)).toBe('$1,079,500.00 USD');
+      expect(formatCurrencyAmount(-272796.96)).toBe('-$272,796.96 USD');
+      expect(formatCurrencyAmount(0)).toBe('$0.00 USD');
+      expect(formatCurrencyAmount(450.5, 'EUR')).toBe('$450.50 EUR');
+    });
+  });
+
+  describe('formatNewsDate', () => {
+    it('returns empty string for null, undefined, empty, or invalid input', () => {
+      expect(formatNewsDate(null)).toBe('');
+      expect(formatNewsDate(undefined)).toBe('');
+      expect(formatNewsDate('')).toBe('');
+      expect(formatNewsDate('invalid-date')).toBe('');
+    });
+
+    it('formats valid ISO date strings and Date objects correctly', () => {
+      const d = new Date(2026, 9, 15);
+      expect(formatNewsDate(d.toISOString())).toBe('15.10.2026');
+      expect(formatNewsDate(d)).toBe('15.10.2026');
+    });
+  });
+
+  describe('calculateReadTime', () => {
+    it('returns 1 min read for null, undefined, or empty html', () => {
+      expect(calculateReadTime(null)).toBe('1 min read');
+      expect(calculateReadTime(undefined)).toBe('1 min read');
+      expect(calculateReadTime('')).toBe('1 min read');
+    });
+
+    it('calculates read time based on word count with 180 wpm', () => {
+      const shortText = '<p>Short paragraph with twenty words.</p>';
+      expect(calculateReadTime(shortText)).toBe('1 min read');
+
+      const manyWords = Array(400).fill('word').join(' ');
+      expect(calculateReadTime(`<p>${manyWords}</p>`)).toBe('3 min read');
+    });
+  });
+
+  describe('formatNotificationTimestamp', () => {
+    it('returns empty string on null, undefined, or empty input', () => {
+      expect(formatNotificationTimestamp(null)).toBe('');
+      expect(formatNotificationTimestamp(undefined)).toBe('');
+      expect(formatNotificationTimestamp('')).toBe('');
+      expect(formatNotificationTimestamp('not-a-valid-date')).toBe('');
+    });
+
+    it('formats valid date string and Date objects with seconds', () => {
+      const date = new Date(2026, 9, 19, 14, 30, 45);
+      expect(formatNotificationTimestamp(date.toISOString())).toBe('19.10.2026 14:30:45');
+      expect(formatNotificationTimestamp(date)).toBe('19.10.2026 14:30:45');
+    });
+  });
 });
+

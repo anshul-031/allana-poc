@@ -2,10 +2,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { prisma } from '@/lib/prisma';
 import {
   searchCatalogProducts,
-  formatPackagingSummary,
   getCatalogProducts,
   getProductBySlug,
 } from '@/server/actions/catalog.actions';
+import { formatPackagingSummary } from '@/lib/utils';
+
 
 vi.mock('@/lib/prisma', () => ({
   prisma: {

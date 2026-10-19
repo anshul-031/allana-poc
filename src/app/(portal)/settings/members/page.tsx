@@ -81,12 +81,12 @@ const defaultMembers: SanitizedMember[] = [
   },
 ];
 
-export default function MembersPage({
-  initialMembers = defaultMembers,
-  authorId = 'u-1',
-  companyId = 'comp-sub-uae',
-}: MembersPageProps) {
+export default function MembersPage(props?: any) {
+  const initialMembers = props?.initialMembers ?? defaultMembers;
+  const authorId = props?.authorId ?? 'u-1';
+  const companyId = props?.companyId ?? 'comp-sub-uae';
   const [members, setMembers] = useState<SanitizedMember[]>(initialMembers);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editingMember, setEditingMember] = useState<SanitizedMember | null>(null);

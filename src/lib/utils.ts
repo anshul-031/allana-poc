@@ -88,3 +88,75 @@ export function calculateDelta(
 
   return { delta, isDeficit, formatted };
 }
+
+/**
+ * Format packaging secondary line matching enterprise export specifications
+ * e.g. "vacuum film 2,0 kg, corrugated box 12 kg, TM \"Allana\""
+ */
+export function formatPackagingSummary(product: {
+  primaryPackaging?: string | null;
+  cartonNetWeightKg?: number | string | any;
+  brand?: string | null;
+}): string {
+  const packType = product.primaryPackaging || 'vacuum film';
+  const weight = product.cartonNetWeightKg ? `${product.cartonNetWeightKg} kg` : 'standard';
+  const brandName = product.brand || 'Allana';
+  return `${packType}, corrugated box ${weight}, TM "${brandName}"`;
+}
+
+
+/**
+ * Format currency amount with proper sign, thousand separators, and ISO currency code
+ * e.g. -272796.96 => "-$272,796.96 USD", 1079500 => "$1,079,500.00 USD"
+ */
+export function formatCurrencyAmount(amount: number, currency = 'USD'): string {
+  const isNegative = amount < 0;
+  const absFormatted = Math.abs(amount).toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return `${isNegative ? '-' : ''}$${absFormatted} ${currency}`;
+}
+
+/**
+ * Format publication date into DD.MM.YYYY
+ */
+export function formatNewsDate(dateInput?: string | Date | null): string {
+  if (!dateInput) return '';
+  const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+  if (isNaN(d.getTime())) return '';
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}.${month}.${year}`;
+}
+
+/**
+ * Calculate estimated read time in minutes
+ */
+export function calculateReadTime(contentHtml?: string | null): string {
+  if (!contentHtml) return '1 min read';
+  const cleanText = contentHtml.replace(/<[^>]*>/g, ' ').trim();
+  const words = cleanText.split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 180));
+  return `${minutes} min read`;
+}
+
+/**
+ * Format notification timestamp into DD.MM.YYYY HH:mm
+ */
+export function formatNotificationTimestamp(dateInput?: string | Date | null): string {
+  if (!dateInput) return '';
+  const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+  if (isNaN(d.getTime())) return '';
+
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  const seconds = String(d.getSeconds()).padStart(2, '0');
+
+  return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+}
+
