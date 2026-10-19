@@ -668,7 +668,7 @@ async function main() {
       vehicleNumber: 'MSKU9482710',
       nonConformWeightKg: 1840.0000,
       receivedQuantityKg: 10000.0000,
-      batchNumber: 'B-260904-1',
+      lotNumber: 'B-260904-1',
       productionDate: new Date('2026-09-04T00:00:00Z'),
     },
   });
