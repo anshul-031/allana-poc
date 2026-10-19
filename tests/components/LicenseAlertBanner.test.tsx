@@ -110,6 +110,19 @@ describe('LicenseAlertBanner component', () => {
     expect(dashboardActions.getDashboardAlerts).toHaveBeenCalledWith('comp-1');
   });
 
+  it('fetches alerts for default company when neither initialAlerts nor companyId is provided', async () => {
+    vi.mocked(dashboardActions.getDashboardAlerts).mockResolvedValueOnce({
+      success: true,
+      alerts: mockAlerts,
+    });
+
+    render(<LicenseAlertBanner />);
+
+    await waitFor(() => {
+      expect(dashboardActions.getDashboardAlerts).toHaveBeenCalledWith('comp-lulu-uae');
+    });
+  });
+
   it('renders singular shipment text when shipmentCount is 1', () => {
     render(
       <LicenseAlertBanner

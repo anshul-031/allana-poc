@@ -12,7 +12,6 @@ export const metadata = {
 };
 
 export default function DashboardPage() {
-  const companyId = 'comp-lulu-uae';
   return (
     <div
       data-testid="dashboard-page-container"
@@ -27,13 +26,13 @@ export default function DashboardPage() {
       <HeroSlider />
 
       {/* 2. Contextual Action Alert Banner (Shipments Updates & License Expiry) */}
-      <LicenseAlertBanner companyId={companyId} />
+      <LicenseAlertBanner />
 
       {/* 3. Financial KPI Cards & Multi-Sales Organization Selector */}
-      <FinancialCards companyId={companyId} />
+      <FinancialCards />
 
       {/* 4. Recent Shipments Widget (Last 3 Months) */}
-      <RecentShipmentsWidget companyId={companyId} />
+      <RecentShipmentsWidget />
 
       {/* 5. Latest Export News & Market Insights Grid */}
       <NewsGrid />

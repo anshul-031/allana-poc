@@ -166,4 +166,18 @@ describe('RecentShipmentsWidget Component (FEAT-2.3)', () => {
       expect(screen.getByText('ORD-2026-88192')).toBeInTheDocument();
     });
   });
+
+  it('fetches shipments on mount when neither initialShipments nor companyId is provided', async () => {
+    vi.mocked(shipmentsActions.getRecentShipments).mockResolvedValue({
+      success: true,
+      shipments: mockShipments,
+      totalCount: 3,
+    });
+
+    render(<RecentShipmentsWidget />);
+
+    await waitFor(() => {
+      expect(shipmentsActions.getRecentShipments).toHaveBeenCalledWith({ companyId: 'comp-lulu-uae' });
+    });
+  });
 });

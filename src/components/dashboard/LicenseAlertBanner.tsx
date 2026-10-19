@@ -6,6 +6,7 @@ import {
   DashboardAlertsDTO,
   getDashboardAlerts,
 } from '@/server/actions/dashboard.actions';
+import { parseActiveCompanyId } from '@/lib/company-context';
 
 export interface LicenseAlertBannerProps {
   initialAlerts?: DashboardAlertsDTO;
@@ -22,7 +23,11 @@ export default function LicenseAlertBanner({
 
   useEffect(() => {
     if (!initialAlerts) {
-      getDashboardAlerts(companyId).then((res) => {
+      const activeId =
+        companyId ||
+        parseActiveCompanyId(document?.cookie) ||
+        'comp-lulu-uae';
+      getDashboardAlerts(activeId).then((res) => {
         if (res.success) {
           setAlerts(res.alerts);
         }

@@ -8,7 +8,7 @@ import {
   getRecentShipments,
 } from '@/server/actions/shipments.actions';
 import { formatCurrencyAmount } from '@/lib/utils';
-
+import { parseActiveCompanyId } from '@/lib/company-context';
 
 export interface RecentShipmentsWidgetProps {
   initialShipments?: ShipmentSummaryDTO[];
@@ -77,7 +77,11 @@ export default function RecentShipmentsWidget({
   useEffect(() => {
     if (!initialShipments) {
       setIsLoading(true);
-      getRecentShipments({ companyId })
+      const activeId =
+        companyId ||
+        parseActiveCompanyId(document?.cookie) ||
+        'comp-lulu-uae';
+      getRecentShipments({ companyId: activeId })
         .then((res) => {
           if (res.success) {
             setShipments(res.shipments);

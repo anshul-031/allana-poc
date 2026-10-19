@@ -8,6 +8,7 @@ import {
   getCompanyFinancials,
 } from '@/server/actions/financials.actions';
 import { formatCurrencyAmount } from '@/lib/utils';
+import { parseActiveCompanyId } from '@/lib/company-context';
 
 
 export interface FinancialCardsProps {
@@ -27,10 +28,19 @@ export default function FinancialCards({
     initialData?.selectedSalesOrgId || initialData?.availableSalesOrgs[0]?.id
   );
 
+  const getEffectiveCompanyId = () => {
+    return (
+      companyId ||
+      parseActiveCompanyId(document?.cookie) ||
+      'comp-lulu-uae'
+    );
+  };
+
   useEffect(() => {
     if (!initialData) {
       setIsLoading(true);
-      getCompanyFinancials({ companyId, salesOrgId: selectedSalesOrgId })
+      const activeId = getEffectiveCompanyId();
+      getCompanyFinancials({ companyId: activeId, salesOrgId: selectedSalesOrgId })
         .then((res) => {
           setData(res);
           if (res.selectedSalesOrgId && !selectedSalesOrgId) {
@@ -50,7 +60,8 @@ export default function FinancialCards({
     }
     setIsLoading(true);
     try {
-      const res = await getCompanyFinancials({ companyId, salesOrgId: orgId });
+      const activeId = getEffectiveCompanyId();
+      const res = await getCompanyFinancials({ companyId: activeId, salesOrgId: orgId });
       setData(res);
     } finally {
       setIsLoading(false);

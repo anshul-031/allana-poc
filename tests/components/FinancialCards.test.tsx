@@ -189,5 +189,18 @@ describe('Financial KPI Cards & Sales Org Selector (FEAT-2.2)', () => {
         expect(screen.getByTestId('value-credit-limit')).toHaveTextContent('$2,500,000.00 USD');
       });
     });
+
+    it('fetches financials on mount when companyId is not provided', async () => {
+      vi.mocked(financialsActions.getCompanyFinancials).mockResolvedValue(mockFinancialsPositive);
+
+      render(<FinancialCards />);
+
+      await waitFor(() => {
+        expect(financialsActions.getCompanyFinancials).toHaveBeenCalledWith({
+          companyId: 'comp-lulu-uae',
+          salesOrgId: undefined,
+        });
+      });
+    });
   });
 });

@@ -867,6 +867,29 @@ async function main() {
         status: CustomProductStatus.DECLINED,
         managerComments: 'Declined: Bone-in bovine products require additional protocol approval under GCC GSO standards; minimum viable order volume is 25 MT.',
       },
+      {
+        requestNumber: 'NPD-2026-029',
+        companyId: luluHQ.id,
+        createdById: buyerUser.id,
+        categoryName: 'Further Processed / Retail',
+        targetCountry: 'United Arab Emirates',
+        cutSpecification: 'Private Label "LuLu Select" 100% Buffalo Burger Patties 800g retail consumer box (8 x 100g patties).',
+        recipeNotes: 'Coarse ground premium buffalo forequarter meat, onion powder, white pepper, sea salt.',
+        packagingFormat: 'Interleaved wax paper, 8 patties per printed carton, 12 boxes per outer case.',
+        individualPackagingWeight: '800g',
+        freezingType: FreezingType.BLAST_FROZEN,
+        estimatedFcaPricePerTon: 4800.00,
+        targetVolumeMt: 45.00,
+        targetPriceUsd: 4.80,
+        isCalibrated: true,
+        isMarinated: false,
+        isBoneless: true,
+        isSkinless: true,
+        hasSpecification: true,
+        additionalComments: 'Consolidated private label program for LuLu retail supermarkets across GCC.',
+        status: CustomProductStatus.IN_REVIEW,
+        managerComments: 'Artwork packaging approved. Sample batch undergoing sensory panel in Dubai.',
+      },
     ],
   });
 
@@ -1129,6 +1152,86 @@ async function main() {
     ],
   });
 
+  // Shipment 6: IN_TRANSIT (JNPT -> Jebel Ali for LuLu HQ Agro Commodities)
+  const shipment6 = await prisma.shipment.create({
+    data: {
+      orderNumber: 'ORD-2026-88301',
+      companyId: luluHQ.id,
+      salesOrgId: soAgro.id,
+      shipToParty: 'LuLu Group Central Logistics DC, Dubai',
+      destinationCountry: 'United Arab Emirates',
+      totalQuantityMt: 50.00,
+      totalAmountUsd: 145000.00,
+      status: ShipmentStatus.IN_TRANSIT,
+      shippingLine: 'Hapag-Lloyd',
+      vesselName: 'Al Jmeliyah',
+      voyageNumber: '2630E',
+      portOfLoading: 'JNPT Nhava Sheva, India',
+      portOfDestination: 'Jebel Ali Port, UAE',
+      shippingDate: new Date('2026-10-12T10:00:00Z'),
+      etd: new Date('2026-10-14T08:00:00Z'),
+      eta: new Date('2026-10-25T14:00:00Z'),
+    },
+  });
+
+  const c7 = await prisma.container.create({
+    data: {
+      shipmentId: shipment6.id,
+      containerNumber: 'HLCU9920141',
+      sealNumber: 'HL-88190',
+      reeferSetTemp: 'Ambient',
+    },
+  });
+
+  await prisma.shipmentItem.create({
+    data: {
+      containerId: c7.id,
+      productId: pBasmatiRice.id,
+      quantityMt: 50.00,
+      amountUsd: 145000.00,
+    },
+  });
+
+  // Shipment 7: BOOKED (JNPT -> Khalifa Port for LuLu HQ Retail Division)
+  const shipment7 = await prisma.shipment.create({
+    data: {
+      orderNumber: 'ORD-2026-88315',
+      companyId: luluHQ.id,
+      salesOrgId: soRetail.id,
+      shipToParty: 'LuLu Group Regional Logistics Hub, Abu Dhabi',
+      destinationCountry: 'United Arab Emirates',
+      totalQuantityMt: 32.00,
+      totalAmountUsd: 210000.00,
+      status: ShipmentStatus.BOOKED,
+      shippingLine: 'Maersk Line',
+      vesselName: 'Madrid Maersk',
+      voyageNumber: '2640W',
+      portOfLoading: 'JNPT Nhava Sheva, India',
+      portOfDestination: 'Khalifa Port, Abu Dhabi',
+      shippingDate: new Date('2026-10-20T08:00:00Z'),
+      etd: new Date('2026-10-22T10:00:00Z'),
+      eta: new Date('2026-10-31T18:00:00Z'),
+    },
+  });
+
+  const c8 = await prisma.container.create({
+    data: {
+      shipmentId: shipment7.id,
+      containerNumber: 'MSKU4401928',
+      sealNumber: 'ML-77192',
+      reeferSetTemp: '-18.0°C',
+    },
+  });
+
+  await prisma.shipmentItem.create({
+    data: {
+      containerId: c8.id,
+      productId: pBurgerPatties.id,
+      quantityMt: 32.00,
+      amountUsd: 210000.00,
+    },
+  });
+
   // Shipment Documents in Cloudflare R2
   await prisma.shipmentDocument.createMany({
     data: [
@@ -1173,6 +1276,41 @@ async function main() {
         fileName: 'msc-bill-of-lading-MEDU8192044.pdf',
         fileUrl: 'shipments/ORD-2026-88192/bill-of-lading-MAEU9482710.pdf',
         fileSizeBytes: 412000,
+      },
+      {
+        shipmentId: shipment4.id,
+        documentType: 'BILL_OF_LADING',
+        fileName: 'hapag-lloyd-bl-HLCU5510294.pdf',
+        fileUrl: 'shipments/ORD-2026-88192/bill-of-lading-MAEU9482710.pdf',
+        fileSizeBytes: 395000,
+      },
+      {
+        shipmentId: shipment5.id,
+        documentType: 'BILL_OF_LADING',
+        fileName: 'maersk-bl-MSKU7712390.pdf',
+        fileUrl: 'shipments/ORD-2026-88192/bill-of-lading-MAEU9482710.pdf',
+        fileSizeBytes: 430000,
+      },
+      {
+        shipmentId: shipment6.id,
+        documentType: 'BILL_OF_LADING',
+        fileName: 'hapag-lloyd-bl-HLCU9920141.pdf',
+        fileUrl: 'shipments/ORD-2026-88192/bill-of-lading-MAEU9482710.pdf',
+        fileSizeBytes: 415000,
+      },
+      {
+        shipmentId: shipment6.id,
+        documentType: 'PHYTOSANITARY_CERT',
+        fileName: 'phytosanitary-inspection-rice-2026.pdf',
+        fileUrl: 'shipments/ORD-2026-88192/health-vet-certificate-IN-2601.pdf',
+        fileSizeBytes: 298000,
+      },
+      {
+        shipmentId: shipment7.id,
+        documentType: 'BILL_OF_LADING',
+        fileName: 'maersk-booking-MSKU4401928.pdf',
+        fileUrl: 'shipments/ORD-2026-88192/bill-of-lading-MAEU9482710.pdf',
+        fileSizeBytes: 320000,
       },
     ],
   });
@@ -1298,6 +1436,57 @@ async function main() {
         shippedUsd: 92000.00,
         pipelineTonnes: 40.00,
         pipelineUsd: 184000.00,
+      },
+      {
+        companyId: luluRiyadh.id,
+        salesOrgId: soFrozen.id,
+        month: 10,
+        year: 2026,
+        country: 'Saudi Arabia',
+        shipToParty: 'LuLu Hypermarket Dammam DC',
+        sku: 'AL-BUF-SIL-01',
+        skuName: 'Frozen Boneless Buffalo Silverside (SAP: 7941)',
+        targetTonnes: 90.00,
+        targetUsd: 414000.00,
+        lastMonthBalance: 0.00,
+        shippedTonnes: 54.00,
+        shippedUsd: 248400.00,
+        pipelineTonnes: 26.00,
+        pipelineUsd: 119600.00,
+      },
+      {
+        companyId: luluRiyadh.id,
+        salesOrgId: soFrozen.id,
+        month: 10,
+        year: 2026,
+        country: 'Saudi Arabia',
+        shipToParty: 'LuLu Central Coldstore, Jeddah',
+        sku: 'AL-BUF-TOP-02',
+        skuName: 'Frozen Boneless Buffalo Topside (SAP: 7940)',
+        targetTonnes: 120.00,
+        targetUsd: 576000.00,
+        lastMonthBalance: 15.00,
+        shippedTonnes: 72.00,
+        shippedUsd: 345600.00,
+        pipelineTonnes: 48.00,
+        pipelineUsd: 230400.00,
+      },
+      {
+        companyId: luluHQ.id,
+        salesOrgId: soAgro.id,
+        month: 10,
+        year: 2026,
+        country: 'United Arab Emirates',
+        shipToParty: 'LuLu Group Central Logistics DC, Dubai',
+        sku: 'AL-AGRO-RICE-01',
+        skuName: 'Royal Basmati Rice 1121 XXL 5kg Bag',
+        targetTonnes: 100.00,
+        targetUsd: 290000.00,
+        lastMonthBalance: 0.00,
+        shippedTonnes: 50.00,
+        shippedUsd: 145000.00,
+        pipelineTonnes: 50.00,
+        pipelineUsd: 145000.00,
       },
     ],
   });
@@ -1468,6 +1657,77 @@ async function main() {
     },
   });
 
+  // Quality Claim 4: Under Investigation for LuLu Riyadh (comp-lulu-ksa)
+  const claim4 = await prisma.claim.create({
+    data: {
+      claimNumber: 'CLM-2026-0044',
+      companyId: luluRiyadh.id,
+      submittedById: logisticsUser.id,
+      type: ClaimType.CLAIM,
+      status: ClaimStatus.INVESTIGATION,
+      subject: 'Transit temperature deviation alert at Jeddah Islamic Port in Container CMAU8192033',
+      categoryOfRequest: 'Temperature Abuse',
+      supplierName: 'Allanasons Private Limited - Aligarh Processing Unit',
+      shipmentId: shipment2.id,
+      containerNumber: 'CMAU8192033',
+      invoiceNumber: 'INV-2026-04210',
+      deliveryDate: new Date('2026-10-18T00:00:00Z'),
+      description: 'SFDA port veterinary inspection logged temporary temperature rise to -12°C during vessel discharge. Product cores remain at -17.5°C.',
+      companyResponse: 'Carrier CMA CGM data log requested. Preliminary inspection shows product remained deep frozen.',
+    },
+  });
+
+  await prisma.claimProductItem.create({
+    data: {
+      claimId: claim4.id,
+      productId: pSilverside.id,
+      productArticle: '8310S',
+      productName: 'Frozen Boneless Buffalo Silverside',
+      producerName: 'Allanasons Pvt Ltd - Aligarh',
+      country: 'Saudi Arabia',
+      vehicleNumber: 'CMAU8192033',
+      nonConformWeightKg: 1200.0,
+      receivedQuantityKg: 16000.0,
+      lotNumber: 'A-261002-1',
+      productionDate: new Date('2026-10-02T00:00:00Z'),
+    },
+  });
+
+  // Info Request 3: SFDA Compliance for LuLu Riyadh (comp-lulu-ksa)
+  await prisma.claim.create({
+    data: {
+      claimNumber: 'REQ-2026-0018',
+      companyId: luluRiyadh.id,
+      submittedById: buyerUser.id,
+      type: ClaimType.INFO_REQUEST,
+      status: ClaimStatus.ACCEPTED,
+      subject: 'SFDA Abattoir Health Certificate & Microbial Microbiological Analysis for Riyadh Central DC',
+      infoCategory: InfoRequestCategory.DOCS_CERTIFICATE,
+      targetCountry: 'Saudi Arabia',
+      supplierName: 'Allanasons Private Limited - Sahibabad Plant',
+      description: 'Annual regulatory dossier required for SFDA Saudi compliance file.',
+      companyResponse: 'Certified veterinary inspection certificate provided by Indian Ministry of Agriculture & Allanasons QA.',
+      resolvedAt: new Date('2026-10-17T12:00:00Z'),
+    },
+  });
+
+  // Info Request 4: Group ESG & Traceability Audit for LuLu HQ (comp-lulu-corp)
+  await prisma.claim.create({
+    data: {
+      claimNumber: 'REQ-2026-0020',
+      companyId: luluHQ.id,
+      submittedById: adminUser.id,
+      type: ClaimType.INFO_REQUEST,
+      status: ClaimStatus.COMPLETED,
+      subject: 'LuLu Group International Annual Vendor Quality Assurance Audit 2026',
+      infoCategory: InfoRequestCategory.QUESTIONNAIRE,
+      targetCountry: 'United Arab Emirates',
+      description: 'Group-wide ESG, supplier traceability and cold chain governance compliance questionnaire.',
+      companyResponse: 'Completed questionnaire and audit certificates provided to LuLu corporate compliance committee.',
+      resolvedAt: new Date('2026-10-15T09:00:00Z'),
+    },
+  });
+
   // 13. Regulatory Compliance Licenses (EXPIRING SOON TO TRIGGER DASHBOARD BANNER!)
   await prisma.complianceLicense.createMany({
     data: [
@@ -1515,6 +1775,33 @@ async function main() {
         issueDate: new Date('2025-01-01T00:00:00Z'),
         expiryDate: new Date('2027-01-01T00:00:00Z'),
         documentUrl: 'licenses/LULU-RUH/SFDA-ABATTOIR-APPROVAL-ALIGARH.pdf',
+      },
+      {
+        companyId: luluHQ.id,
+        country: 'United Arab Emirates',
+        licenseName: 'UAE Ministry of Economy Corporate Commercial Registration',
+        licenseNumber: 'MOE-CORP-2024-88',
+        issueDate: new Date('2024-01-01T00:00:00Z'),
+        expiryDate: new Date('2027-01-01T00:00:00Z'),
+        documentUrl: 'licenses/LULU-HQ/MOE-COMMERCIAL-REG-2027.pdf',
+      },
+      {
+        companyId: luluHQ.id,
+        country: 'United Arab Emirates',
+        licenseName: 'Global Food Safety Initiative (GFSI) Quality Certification',
+        licenseNumber: 'GFSI-INT-2025-01',
+        issueDate: new Date('2025-02-15T00:00:00Z'),
+        expiryDate: new Date('2027-02-15T00:00:00Z'),
+        documentUrl: 'licenses/LULU-HQ/GFSI-CERT-2027.pdf',
+      },
+      {
+        companyId: luluHQ.id,
+        country: 'United Arab Emirates',
+        licenseName: 'UAE MOIAT National Halal Group Accreditation',
+        licenseNumber: 'MOIAT-HQ-2025',
+        issueDate: new Date('2025-11-01T00:00:00Z'),
+        expiryDate: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000), // EXPIRING IN 28 DAYS! Triggers banner!
+        documentUrl: 'licenses/LULU-HQ/MOIAT-HALAL-ACCREDITATION-2026.pdf',
       },
     ],
   });
@@ -1639,6 +1926,54 @@ async function main() {
         link: '/dashboard',
         isRead: true,
         createdAt: new Date('2026-10-10T10:00:00Z'),
+      },
+      {
+        userId: logisticsUser.id,
+        title: 'Vessel Berthed: CMA CGM Jacques Saadé arrived at Jeddah',
+        message: 'Container CMAU8192033 (ORD-2026-88204) berthed at Jeddah Islamic Port. Demurrage free time: 5 days.',
+        link: '/shipments',
+        isRead: false,
+        createdAt: new Date('2026-10-18T09:30:00Z'),
+      },
+      {
+        userId: logisticsUser.id,
+        title: 'Customs Clearance Completed: King Abdulaziz Port Dammam',
+        message: 'Shipment ORD-2026-88219 cleared SFDA inspection. Release note issued for transfer to LuLu Dammam DC.',
+        link: '/shipments',
+        isRead: true,
+        createdAt: new Date('2026-10-12T16:00:00Z'),
+      },
+      {
+        userId: logisticsDubaiUser.id,
+        title: 'Gate Pass Ready: Jebel Ali Container Terminal 2',
+        message: 'Consignment ORD-2026-88192 gate pass ready for collection at JAFZA customs gate 4.',
+        link: '/shipments',
+        isRead: false,
+        createdAt: new Date('2026-10-17T11:20:00Z'),
+      },
+      {
+        userId: logisticsDubaiUser.id,
+        title: 'Cold Chain Alert: Madrid Maersk ETA Updated',
+        message: 'Vessel Madrid Maersk (ORD-2026-88250) scheduled to berth at Jebel Ali on Oct 28.',
+        link: '/shipments',
+        isRead: true,
+        createdAt: new Date('2026-10-16T18:00:00Z'),
+      },
+      {
+        userId: 'usr-onboarding-dxb',
+        title: 'Welcome to Allana Customer Export Portal',
+        message: 'Your corporate enterprise buyer account is active. Browse the Product Catalog and download official specifications.',
+        link: '/catalog',
+        isRead: false,
+        createdAt: new Date('2026-10-19T08:00:00Z'),
+      },
+      {
+        userId: 'usr-onboarding-dxb',
+        title: 'Security Alert: Update Temporary Password',
+        message: 'Please update your temporary password to secure your account credentials.',
+        link: '/settings/change-password',
+        isRead: false,
+        createdAt: new Date('2026-10-19T08:05:00Z'),
       },
     ],
   });
