@@ -80,16 +80,49 @@ export default function ProductCard({ product }: ProductCardProps) {
             alignItems: 'center',
             justifyContent: 'center',
             position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div
-            style={{
-              fontSize: '44px',
-              opacity: 0.85,
-            }}
-          >
-            🥩
-          </div>
+          {product.imageUrl ? (
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '4px',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '38px',
+                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.08))',
+                }}
+              >
+                🥩
+              </div>
+              <span
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  color: 'var(--color-text-muted)',
+                }}
+              >
+                {product.brand} Prime Cut
+              </span>
+            </div>
+          )}
 
           {product.isUnderDevelopment && (
             <span

@@ -241,11 +241,11 @@ export default function Header({
                   fontSize: '13px',
                   fontWeight: isActive ? 600 : 500,
                   color: isActive
-                    ? 'var(--color-primary, #0e7490)'
+                    ? 'var(--color-primary-dark, #071120)'
                     : 'var(--color-text-secondary)',
                   textDecoration: 'none',
                   borderBottom: isActive
-                    ? '3px solid var(--color-primary, #0e7490)'
+                    ? '3px solid var(--color-gold, #c5a059)'
                     : '3px solid transparent',
                   transition: 'var(--transition-fast)',
                   whiteSpace: 'nowrap',

@@ -1,21 +1,47 @@
 :root {
-  /* Brand Primary Colors (Allana Deep Navy & Metallic Gold) */
+  /* ==========================================================================
+     ALLANA ENTERPRISE DESIGN TOKENS
+     Deep Navy, Warm Heritage Gold, Modern Clean Surface System
+     ========================================================================== */
+
+  /* Brand Primary Colors (Allana Deep Navy) */
+  --color-primary-950: #040914;
   --color-primary-900: #071120;
   --color-primary-800: #0a192f;
-  --color-primary-700: #0f2342;
-  --color-primary-600: #17335d;
-  --color-primary-500: #1e427b;
-  --color-primary-100: #e0e9f8;
-  --color-primary-50: #f0f4fc;
+  --color-primary-700: #0f2547;
+  --color-primary-600: #173767;
+  --color-primary-500: #1e4580;
+  --color-primary-400: #355f9e;
+  --color-primary-300: #6287be;
+  --color-primary-200: #a3b9dd;
+  --color-primary-100: #e2eaf6;
+  --color-primary-50: #f0f5fc;
 
-  --color-gold-700: #9c7b39;
-  --color-gold-600: #b18d45;
-  --color-gold-500: #c5a059;
-  --color-gold-400: #d4b474;
-  --color-gold-100: #f8f2e4;
-  --color-gold-50: #fbf8f1;
+  /* Primary Semantic Aliases */
+  --color-primary: #0a192f;
+  --color-primary-dark: #071120;
+  --color-primary-light: #173767;
+  --color-primary-border: #1e4580;
+
+  /* Brand Accent Colors (Allana Heritage Gold) */
+  --color-gold-900: #5a4418;
+  --color-gold-800: #7a5e24;
+  --color-gold-700: #96742c;
+  --color-gold-600: #b8903e;
+  --color-gold-500: #d4a74a;
+  --color-gold-400: #e2bd6c;
+  --color-gold-300: #edd398;
+  --color-gold-200: #f6e7c7;
+  --color-gold-100: #fbf3e4;
+  --color-gold-50: #fdfaf2;
+
+  /* Gold Semantic Aliases */
+  --color-gold: #d4a74a;
+  --color-gold-dark: #b8903e;
+  --color-gold-light: #e2bd6c;
 
   /* Neutrals & Slate */
+  --color-slate-950: #090d16;
   --color-slate-900: #0f172a;
   --color-slate-800: #1e293b;
   --color-slate-700: #334155;
@@ -28,26 +54,49 @@
   --color-slate-50: #f8fafc;
   --color-white: #ffffff;
 
+  /* Surface & Canvas System */
+  --color-background: #f8fafc;
+  --color-background-subtle: #f1f5f9;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f8fafc;
+  --color-surface-raised: #ffffff;
+
+  /* Borders & Dividers */
+  --color-border: #e2e8f0;
+  --color-border-subtle: #f1f5f9;
+  --color-border-strong: #cbd5e1;
+
+  /* Text & Content Hierarchy */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748b;
+  --color-text-muted: #94a3b8;
+
   /* Semantic State Colors */
+  --color-success: #10b981;
   --color-success-bg: #f0fdf4;
   --color-success-border: #bbf7d0;
   --color-success-text: #166534;
-  --color-success: #10b981;
 
+  --color-warning: #f59e0b;
   --color-warning-bg: #fffbeb;
   --color-warning-border: #fde68a;
   --color-warning-text: #92400e;
-  --color-warning: #f59e0b;
 
+  --color-danger: #ef4444;
   --color-danger-bg: #fef2f2;
   --color-danger-border: #fecaca;
   --color-danger-text: #991b1b;
-  --color-danger: #ef4444;
 
-  --color-info-bg: #eff6ff;
-  --color-info-border: #bfdbfe;
-  --color-info-text: #1e40af;
-  --color-info: #3b82f6;
+  --color-error: #ef4444;
+  --color-error-bg: #fef2f2;
+  --color-error-border: #fecaca;
+  --color-error-text: #991b1b;
+
+  --color-info: #0284c7;
+  --color-info-bg: #f0f9ff;
+  --color-info-border: #bae6fd;
+  --color-info-text: #0369a1;
 
   /* Specialized UI Accent Colors from User Manual */
   --color-notice-pink-bg: #fff1f2;
@@ -75,7 +124,14 @@
   --font-size-2xl: 1.875rem;  /* 30px */
   --font-size-3xl: 2.25rem;   /* 36px */
 
-  /* Spacing */
+  /* Spacing System (Both T-Shirt & Numeric Scales) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
   --spacing-1: 0.25rem;  /* 4px */
   --spacing-2: 0.5rem;   /* 8px */
   --spacing-3: 0.75rem;  /* 12px */
@@ -87,22 +143,35 @@
   --spacing-12: 3rem;    /* 48px */
   --spacing-16: 4rem;    /* 64px */
 
-  /* Radii */
+  /* Radii (Both --border-radius-* and --radius-*) */
+  --border-radius-xs: 4px;
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-2xl: 24px;
+  --border-radius-pill: 9999px;
+  --border-radius-full: 9999px;
+
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  /* Box Shadows & Atmospheric Elevation */
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 14px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.1), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 24px 38px -6px rgba(15, 23, 42, 0.14), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
+  --shadow-inner: inset 0 2px 4px 0 rgba(15, 23, 42, 0.05);
 
-  /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-gold: 0 4px 16px 0 rgba(212, 167, 74, 0.28);
+  --shadow-navy: 0 8px 24px 0 rgba(10, 25, 47, 0.25);
+
+  /* Transitions & Animation Curves */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }

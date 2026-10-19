@@ -18,9 +18,10 @@ export default async function ClaimsPage() {
     <div
       data-testid="claims-page"
       style={{
-        maxWidth: '1280px',
+        maxWidth: '1440px',
         margin: '0 auto',
-        padding: '1.5rem',
+        padding: 'var(--spacing-xl) var(--spacing-lg)',
+        width: '100%',
       }}
     >
       <ClaimsPortalView initialClaims={claims} initialTotal={total} />

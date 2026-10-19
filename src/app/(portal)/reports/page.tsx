@@ -19,7 +19,15 @@ export default async function ReportsPage() {
   ]);
 
   return (
-    <div data-testid="reports-page">
+    <div
+      data-testid="reports-page"
+      style={{
+        maxWidth: '1440px',
+        margin: '0 auto',
+        padding: 'var(--spacing-xl) var(--spacing-lg)',
+        width: '100%',
+      }}
+    >
       <ReportsPortalView
         initialStatement={statementRes.statement}
         initialAging={agingRes.aging}

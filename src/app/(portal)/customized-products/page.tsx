@@ -9,9 +9,10 @@ export default async function CustomizedProductsPage() {
     <div
       data-testid="customized-products-page"
       style={{
-        maxWidth: '1280px',
+        maxWidth: '1440px',
         margin: '0 auto',
-        padding: 'var(--spacing-xl, 24px) var(--spacing-lg, 16px)',
+        padding: 'var(--spacing-xl) var(--spacing-lg)',
+        width: '100%',
       }}
     >
       <NpdDashboardView initialRequests={result.requests} />
