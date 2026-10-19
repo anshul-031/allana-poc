@@ -131,4 +131,29 @@ describe('LoginPage Component (src/app/(auth)/login/page.tsx)', () => {
       expect(document.cookie).toContain('allana_active_company_id=comp-lulu-uae');
     });
   });
+
+  it('populates credentials when quick demo account buttons are clicked', () => {
+    render(<LoginPage />);
+    const emailInput = screen.getByLabelText(/Login \(E-mail\)/i) as HTMLInputElement;
+    const pwdInput = screen.getByLabelText(/Password \*/i) as HTMLInputElement;
+
+    fireEvent.click(screen.getByRole('button', { name: /Admin \(Ahmed\)/i }));
+    expect(emailInput.value).toBe('admin.lulu@lulumea.com');
+    expect(pwdInput.value).toBe('Allana@2026!');
+
+    fireEvent.click(screen.getByRole('button', { name: /Buyer \(Hamdan\)/i }));
+    expect(emailInput.value).toBe('buyer.dxb@lulumea.com');
+
+    fireEvent.click(screen.getByRole('button', { name: /Finance \(Fatima\)/i }));
+    expect(emailInput.value).toBe('finance.dxb@lulumea.com');
+
+    fireEvent.click(screen.getByRole('button', { name: /QA Officer \(Karen\)/i }));
+    expect(emailInput.value).toBe('qa.dxb@lulumea.com');
+
+    fireEvent.click(screen.getByRole('button', { name: /Logistics \(Tariq\)/i }));
+    expect(emailInput.value).toBe('logistics.ksa@lulumea.com');
+
+    fireEvent.click(screen.getByRole('button', { name: /New User \(Zayd\)/i }));
+    expect(emailInput.value).toBe('onboarding.buyer@lulumea.com');
+  });
 });

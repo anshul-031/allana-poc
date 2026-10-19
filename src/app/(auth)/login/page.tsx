@@ -118,6 +118,74 @@ export default function LoginPage() {
           </button>
         </form>
 
+        <div className="demo-accounts-panel">
+          <div className="demo-accounts-title">
+            Quick Demo Accounts (Password: <code>Allana@2026!</code>)
+          </div>
+          <div className="demo-accounts-grid">
+            <button
+              type="button"
+              className="btn-demo-account"
+              onClick={() => {
+                setEmail('admin.lulu@lulumea.com');
+                setPassword('Allana@2026!');
+              }}
+            >
+              👑 Admin (Ahmed)
+            </button>
+            <button
+              type="button"
+              className="btn-demo-account"
+              onClick={() => {
+                setEmail('buyer.dxb@lulumea.com');
+                setPassword('Allana@2026!');
+              }}
+            >
+              🛒 Buyer (Hamdan)
+            </button>
+            <button
+              type="button"
+              className="btn-demo-account"
+              onClick={() => {
+                setEmail('finance.dxb@lulumea.com');
+                setPassword('Allana@2026!');
+              }}
+            >
+              💰 Finance (Fatima)
+            </button>
+            <button
+              type="button"
+              className="btn-demo-account"
+              onClick={() => {
+                setEmail('qa.dxb@lulumea.com');
+                setPassword('Allana@2026!');
+              }}
+            >
+              🔬 QA Officer (Karen)
+            </button>
+            <button
+              type="button"
+              className="btn-demo-account"
+              onClick={() => {
+                setEmail('logistics.ksa@lulumea.com');
+                setPassword('Allana@2026!');
+              }}
+            >
+              🚢 Logistics (Tariq)
+            </button>
+            <button
+              type="button"
+              className="btn-demo-account"
+              onClick={() => {
+                setEmail('onboarding.buyer@lulumea.com');
+                setPassword('Allana@2026!');
+              }}
+            >
+              🔑 New User (Zayd)
+            </button>
+          </div>
+        </div>
+
         <div className="auth-footer-help">
           <p>
             First time logging in? Use the temporary password from your official Allana welcome letter.
@@ -263,9 +331,54 @@ export default function LoginPage() {
           opacity: 0.6;
           cursor: not-allowed;
         }
-        .auth-footer-help {
-          margin-top: 2rem;
+        .demo-accounts-panel {
+          margin-top: 1.5rem;
           padding-top: 1.25rem;
+          border-top: 1px solid #e2e8f0;
+        }
+        .demo-accounts-title {
+          font-size: 0.6875rem;
+          font-weight: 700;
+          color: #475569;
+          margin-bottom: 0.75rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .demo-accounts-title code {
+          background: #f1f5f9;
+          padding: 0.15rem 0.35rem;
+          border-radius: 4px;
+          color: #0f172a;
+          font-family: monospace;
+        }
+        .demo-accounts-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+          gap: 0.5rem;
+        }
+        .btn-demo-account {
+          padding: 0.45rem 0.6rem;
+          font-size: 0.6875rem;
+          font-weight: 600;
+          border-radius: 6px;
+          border: 1px solid #cbd5e1;
+          background: #f8fafc;
+          color: #0f172a;
+          cursor: pointer;
+          text-align: left;
+          transition: all 0.15s ease;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .btn-demo-account:hover {
+          background: #eff6ff;
+          border-color: #93c5fd;
+          color: #1e40af;
+        }
+        .auth-footer-help {
+          margin-top: 1.5rem;
+          padding-top: 1rem;
           border-top: 1px solid #f1f5f9;
           font-size: 0.75rem;
           color: #94a3b8;

@@ -13,70 +13,70 @@ export interface ProfilePageProps {
 }
 
 const defaultCompany: RelatedCompanyDTO = {
-  id: 'comp-sub-uae',
+  id: 'comp-lulu-uae',
   name: 'LuLu Hypermarket LLC (Dubai)',
   code: 'LULU-UAE',
   country: 'United Arab Emirates',
-  region: 'Middle East & GCC',
-  telephone: '+971 4 298 8888',
-  email: 'procurement@ae.lulumea.com',
+  region: 'Middle East',
+  telephone: '+971-4-2988880',
+  email: 'meatbuyer.dxb@luluhypermarket.com',
   isParent: false,
   isActive: true,
-  managerName: 'Kareem Al-Sayed',
-  managerEmail: 'kareem.alsayed@allana.com',
-  managerPhone: '+971 50 882 1920',
+  managerName: 'Rajesh Sharma',
+  managerEmail: 'rajesh.sharma@allana.com',
+  managerPhone: '+91-22-22811000',
 };
 
 const defaultRelatedCompanies: RelatedCompanyDTO[] = [
   {
-    id: 'comp-parent-lulu',
+    id: 'comp-lulu-corp',
     name: 'LuLu Group International (Holding HQ)',
     code: 'LULU-HQ',
     country: 'United Arab Emirates',
-    region: 'Middle East & GCC',
-    telephone: '+971 2 418 2000',
-    email: 'corporate@lulugroup.com',
+    region: 'Middle East',
+    telephone: '+971-2-6421800',
+    email: 'procurement@ae.lulumea.com',
     isParent: true,
     isActive: true,
-    managerName: 'Kareem Al-Sayed',
-    managerEmail: 'kareem.alsayed@allana.com',
-    managerPhone: '+971 50 882 1920',
+    managerName: 'Rajesh Sharma',
+    managerEmail: 'rajesh.sharma@allana.com',
+    managerPhone: '+91-22-22811000',
   },
   {
-    id: 'comp-sub-uae',
+    id: 'comp-lulu-uae',
     name: 'LuLu Hypermarket LLC (Dubai)',
     code: 'LULU-UAE',
     country: 'United Arab Emirates',
-    region: 'Middle East & GCC',
-    telephone: '+971 4 298 8888',
-    email: 'procurement@ae.lulumea.com',
+    region: 'Middle East',
+    telephone: '+971-4-2988880',
+    email: 'meatbuyer.dxb@luluhypermarket.com',
     isParent: false,
     isActive: true,
-    managerName: 'Kareem Al-Sayed',
-    managerEmail: 'kareem.alsayed@allana.com',
-    managerPhone: '+971 50 882 1920',
+    managerName: 'Rajesh Sharma',
+    managerEmail: 'rajesh.sharma@allana.com',
+    managerPhone: '+91-22-22811000',
   },
   {
-    id: 'comp-sub-ksa',
-    name: 'LuLu Saudi Hypermarkets LLC (Riyadh)',
-    code: 'LULU-KSA',
+    id: 'comp-lulu-ksa',
+    name: 'LuLu Saudi Hypermarkets Co. (Riyadh)',
+    code: 'LULU-RUH',
     country: 'Saudi Arabia',
-    region: 'Middle East & GCC',
-    telephone: '+966 11 405 5555',
-    email: 'procurement@sa.lulumea.com',
+    region: 'Gulf',
+    telephone: '+966-11-4091100',
+    email: 'meatimports.ksa@luluhypermarket.com',
     isParent: false,
     isActive: true,
-    managerName: 'Kareem Al-Sayed',
-    managerEmail: 'kareem.alsayed@allana.com',
-    managerPhone: '+971 50 882 1920',
+    managerName: 'Rajesh Sharma',
+    managerEmail: 'rajesh.sharma@allana.com',
+    managerPhone: '+91-22-22811000',
   },
 ];
 
 const defaultManager: ManagerInfo = {
-  name: 'Kareem Al-Sayed',
+  name: 'Rajesh Sharma',
   title: 'Senior Commercial Director – Middle East & Africa Export Division',
-  email: 'kareem.alsayed@allana.com',
-  phone: '+971 50 882 1920',
+  email: 'rajesh.sharma@allana.com',
+  phone: '+91-22-22811000',
   location: 'Allana Corporate Center, Dubai Trade Hub & Allanasons House Mumbai',
 };
 
@@ -84,7 +84,7 @@ export default function ProfilePage(props?: any) {
   const initialCompany = props?.initialCompany ?? defaultCompany;
   const initialRelatedCompanies = props?.initialRelatedCompanies ?? defaultRelatedCompanies;
   const initialManager = props?.initialManager ?? defaultManager;
-  const userId = props?.userId ?? 'u-lulu-buyer-1';
+  const userId = props?.userId ?? 'usr-default';
   const [company] = useState<RelatedCompanyDTO>(initialCompany);
   const [relatedCompanies] = useState<RelatedCompanyDTO[]>(initialRelatedCompanies);
 

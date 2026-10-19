@@ -17,17 +17,43 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
     role: 'ADMIN',
   };
 
-  const defaultCompany = {
-    id: 'comp-lulu-uae',
-    name: 'LuLu Hypermarket LLC (Dubai Branch)',
-    code: 'LULU-DXB',
-    country: 'United Arab Emirates',
-    region: 'Middle East',
-    telephone: '+971-4-2988880',
-    email: 'meatbuyer.dxb@luluhypermarket.com',
-    isParent: false,
-    isActive: true,
-  };
+  const relatedCompanies = [
+    {
+      id: 'comp-lulu-uae',
+      name: 'LuLu Hypermarket LLC (Dubai Branch)',
+      code: 'LULU-DXB',
+      country: 'United Arab Emirates',
+      region: 'Middle East',
+      telephone: '+971-4-2988880',
+      email: 'meatbuyer.dxb@luluhypermarket.com',
+      isParent: false,
+      isActive: true,
+    },
+    {
+      id: 'comp-lulu-corp',
+      name: 'LuLu Group International (HQ)',
+      code: 'LULU-HQ',
+      country: 'United Arab Emirates',
+      region: 'Middle East',
+      telephone: '+971-2-6421800',
+      email: 'procurement@ae.lulumea.com',
+      isParent: true,
+      isActive: true,
+    },
+    {
+      id: 'comp-lulu-ksa',
+      name: 'LuLu Saudi Hypermarkets Co. (Riyadh)',
+      code: 'LULU-RUH',
+      country: 'Saudi Arabia',
+      region: 'Gulf',
+      telephone: '+966-11-4091100',
+      email: 'meatimports.ksa@luluhypermarket.com',
+      isParent: false,
+      isActive: true,
+    },
+  ];
+
+  const defaultCompany = relatedCompanies[0];
 
   return (
     <div
@@ -42,8 +68,8 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       <Header
         user={defaultUser}
         activeCompany={defaultCompany}
-        relatedCompanies={[defaultCompany]}
-        unreadNotificationCount={3}
+        relatedCompanies={relatedCompanies}
+        unreadNotificationCount={4}
       />
 
       <main
