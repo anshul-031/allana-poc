@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { getProductBySlug } from '@/server/actions/catalog.actions';
 import { generateProductSpecSheetPdf } from '@/lib/pdf';
 
+export const dynamic = 'force-dynamic';
+
 interface RouteContext {
   params: Promise<{
     slug: string;

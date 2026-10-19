@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createPresignedDownloadUrl } from '@/lib/r2';
 
+export const dynamic = 'force-dynamic';
+
 const downloadRequestSchema = z.object({
   key: z.string().min(1, 'Storage key is required'),
 });

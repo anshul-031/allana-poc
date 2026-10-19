@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createPresignedUploadUrl } from '@/lib/r2';
 
+export const dynamic = 'force-dynamic';
+
 const uploadRequestSchema = z.object({
   fileName: z.string().min(1, 'File name is required'),
   contentType: z.string().min(1, 'Content-Type is required'),
