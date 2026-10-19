@@ -1,0 +1,175 @@
+
+
+=== PAGE 1 ===
+
+1 
+ 
+MHP has converted a relationship-driven export business into a digitally enabled 
+customer ecosystem where product discovery, onboarding, shipment visibility, 
+ﬁnancial transparency and service support are largely self-managed by the 
+customer. 
+For poultry and retail this is probably where the industry is heading over the next 5 
+years. 
+ 
+From the user manual and portal structure, MHP appears to have built a mature B2B 
+customer self-service platform rather than a simple order booking system. 
+ 
+The portal combines six important functions into one customer interface: 
+1. Customer onboarding  
+2. Product discovery  
+3. Customized product development  
+4. Shipment tracking  
+5. Financial transparency  
+6. Customer service and claims management  
+This means the customer depends less on sales executives for routine activities. 
+ 
+1. Customer Onboarding 
+Customers receive login credentials, create their own password, create additional users, 
+and assign permissions internally.  
+This is quite advanced because MHP eƯectively allows: 
+ Buyer  
+ Procurement manager  
+ Finance team  
+ Logistics team  
+ QA team  
+to all access the same account with diƯerent permissions. For a large customer such as 
+Lulu, Carrefour or a distributor, this is extremely useful. 
+ 
+ 
+ 
+
+=== PAGE 2 ===
+
+2 
+ 
+Relevance to Allana 
+For bu Ưalo exports this may not add huge value immediately because relationships 
+remain highly personal. For IRAPL and retail distribution, however, this could become 
+very valuable. 
+ 
+2. Product Catalog 
+This is probably the most interesting feature. Customers can: 
+ search products  
+ ﬁlter by category  
+ ﬁlter by packaging type  
+ ﬁlter by frozen format  
+ browse brands  
+ view packaging examples  
+ view technical speciﬁcations and storage conditions.  
+Effectively this becomes a digital sales brochure. Instead of: "Please send product 
+catalogue", the customer already has everything online. 
+For Allana this could become: 
+BuƯalo 
+ Silverside  
+ Topside  
+ Shin shank  
+ Trimmings  
+ OƯals  
+ VPCM products 
+with: 
+ speciﬁcation sheets  
+ carton dimensions  
+ loading pattern  
+ shelf life  
+ certiﬁcations  
+Sheep and Goat 
+This becomes even more useful because SKU complexity is much higher. 
+ 
+
+=== PAGE 3 ===
+
+3 
+ 
+3. Customized Product Requests 
+Customers can submit requests for: 
+ new cuts  
+ new packaging  
+ new recipes  
+ new speciﬁcations  
+and then track progress through statuses; In Review, Analysis, Accepted, Declined. 
+This effectively digitizes interaction between: 
+Customer → Sales → R&D → Production → Customer 
+For example: Need 450g vacuum packed goat cubes for UAE retail. 
+Instead of endless emails, the customer simply submits the request. This is extremely 
+useful for RTC/RTE and retail businesses. 
+ 
+4. Shipment Tracking 
+This is where MHP seems very strong. Customers can see: 
+ order number  
+ shipment quantity  
+ shipment value  
+ shipment status  
+ ETD  
+ ETA  
+ container number  
+ shipping line  
+ destination port. 
+This removes a huge amount of email traƯic. Typical export conversations become 
+unnecessary: 
+ Container shipped?  
+ Vessel name?  
+ ETA?  
+ Documents sent?  
+ Has container arrived?  
+ 
+ 
+
+=== PAGE 4 ===
+
+4 
+ 
+5. Financial Dashboard 
+This is something meat exporters almost never provide. Customers can see: 
+ credit limit  
+ receivables  
+ overdue receivables  
+ available limit. 
+For distributors this is extremely valuable. 
+Example: 
+ Credit Limit: $2 million 
+ Outstanding: $1.2 million 
+ Available: $800,000 
+Customer immediately knows whether additional orders can be placed. 
+ 
+6. Claims and Service 
+Notiﬁcations include: 
+ shipment arrival alerts  
+ custom product status  
+ claim updates  
+ license expiry alerts.  
+This converts the portal into a customer service desk rather than merely an ordering 
+tool. 
+ 
+Assessment 
+This is not an ecommerce platform. 
+It is closer to: 
+SAP Customer Portal + CRM + Shipment Tracker + Product Catalog + Service Desk 
+ 
+ 
+ 
+ 
+
+=== PAGE 5 ===
+
+5 
+ 
+Would this work for Allana? 
+ 
+Immediate value: 
+ Shipment tracking  
+ Document repository  
+ Product catalogue  
+ Customer notiﬁcations  
+Medium-term value: 
+ Claims portal  
+ Credit dashboard  
+ Customer onboarding  
+Long-term value: 
+ Online ordering  
+ Forecast sharing  
+ Retail replenishment planning 
+ 
+ 
+ 
+ 
+ 

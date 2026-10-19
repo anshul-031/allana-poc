@@ -1,0 +1,658 @@
+
+
+=== PAGE 1 ===
+
+Instructions for clients of the export portal 
+ 
+1. Authorization ................................ ................................ ................................ ............... 2 
+2. Header menu ................................ ................................ ................................ ................ 2 
+3. Header ................................ ................................ ................................ .......................... 3 
+3.1 Drop-down list with related companies ................................ ................................  3 
+3.2 Notifications ................................ ................................ ................................ ........... 3 
+3.3 Settings menu ................................ ................................ ................................ ........ 4 
+4. Profile ................................ ................................ ................................ ........................... 4 
+4.1 Company information ................................ ................................ ............................ 4 
+4.2 Contact info ................................ ................................ ................................ ............ 5 
+4.3 Related Companies ................................ ................................ ................................  6 
+5. Members List ................................ ................................ ................................ ............... 7 
+6. Action Log ................................ ................................ ................................ .................... 9 
+7. Password change ................................ ................................ ................................ ........ 9 
+8. Exit from the personal cabinet ................................ ................................ ................. 10 
+9. Footer ................................ ................................ ................................ ......................... 11 
+10. Dashboard ................................ ................................ ................................ ................ 11 
+10.1 Financial Indicators ................................ ................................ ........................... 12 
+10.2 Recent Shipments ................................ ................................ ..............................  13 
+10.3 News and Slider ................................ ................................ ................................ . 14 
+10.4 Licenses ................................ ................................ ................................ ............. 14 
+11. Products Catalog ................................ ................................ ................................ ..... 15 
+12. Customized Product ................................ ................................ ................................  20 
+13. Shipments list ................................ ................................ ................................ .......... 21 
+14.  Sales Plan ................................ ................................ ................................ ............... 25 
+15. Reports ................................ ................................ ................................ ..................... 28 
+15.1 Statement of account report................................ ................................ .............. 28 
+15.2 Account receivables report ................................ ................................ ............... 29 
+16. News ................................ ................................ ................................ ......................... 29 
+17. Claims and Requests ................................ ................................ ..............................  30 
+ 
+ 
+ 
+ 
+
+=== PAGE 2 ===
+
+User interface  
+ 
+1. Authorization  
+For the first entry to the portal, the client will receive a welcome letter indicating the 
+login (e-mail) and password to enter. After the first authorization, the client immediately goes 
+to the password change page, where he must enter and confirm the new password. After 
+changing the password, the client needs to re -authorize with the login (e -mail) and a new 
+password. 
+ 
+On the authorization page, users have the option to reset their passwords. The 
+password can be reset by using the email used for authorization. 
+ 
+2. Header menu 
+After successful authorization, the client goes to the Dashboard page. The client sees 
+menu items: 
+- Dashboard - transfer to the dashboard page on click 
+- Products Catalog - transfer to products catalog page on click 
+- Customized Product - transfer to customized product page on click 
+- Shipments List - transfer to shipments list page on click 
+- Sales Plan - transfer to sales plan page on click 
+- Reports - transfer to reports page on click 
+- News - transfer to news page on click 
+
+
+=== PAGE 3 ===
+
+- Claims and Requests - transfer to request page after click 
+ 
+ 
+3. Header 
+3.1 Drop-down list with related companies 
+ If the client has related companies, he can view them in the drop-down list with related 
+companies (in the header on the left). The client can go to the desired company by simply 
+clicking on it. After switching to another company, the client will see all the data of this 
+company. 
+ 
+ 
+ 3.2 Notifications 
+When the client clicks on the "bell", a context menu of messages for the client appears. 
+Types of messages that may receive: 
+- a message about changing the status of an application for a custom product 
+- request registration and status change 
+- notification about the arrival of the delivery (2 weeks before the arrival and at the time 
+when the delivery has arrived) 
+- license updates 
+Available actions for the client: 
+- mark a specific message as read 
+
+
+=== PAGE 4 ===
+
+- mark all messages as read 
+- filtering of unread messages 
+ 
+ 3.3 Settings menu 
+ By clicking on the "settings menu", the user can go to the following pages: 
+- Profile 
+- Members Lists 
+- Licenses (if the user’s country is Saudi Arabia) 
+- Action Log 
+- Change the password 
+- Logout 
+ 
+4. Profile 
+ The user can go to the page of his personal data, so he needs to click on the 
+"settings menu" and select "Profile" from the drop-down list.  
+4.1 Company information 
+The name of the company is displayed on the page, user can see data about his 
+company on the Profile 
+- Company name 
+
+
+=== PAGE 5 ===
+
+- Region 
+- Country 
+- Company telephone 
+- Company e-mail 
+ 
+ 
+ 4.2 Contact info 
+The user can see MHP manager contact info on the Profile page: 
+- MHP manager name 
+- Contact e-mail 
+- Contact telephone 
+ 
+ 
+
+
+=== PAGE 6 ===
+
+ 4.3 Related Companies 
+By scrolling down, the user can see related companies, which are displayed if the user 
+has related companies. In the table of related companies, the user sees the following 
+information about the companies: 
+- COMPANY 
+- COUNTRY 
+- MANAGER 
+- MANAGER E-MAIL 
+By clicking on the “arrow”, the user can see additional information about the company: 
+- Company name 
+- Company region 
+- Company telephone 
+- Company e-mail 
+ 
+On the right side of the table is located the "Sign in" button, the client can go to the 
+desired company by simply clicking on this button. After switching to another company, the 
+client will see all the data of this company. 
+ 
+ 
+ 
+
+
+=== PAGE 7 ===
+
+5. Members List 
+On the “Members List” page are displayed all users belonging to the parent company. 
+The customer can view the table of users. The following information is displayed in the user 
+table: 
+- EMAIL 
+- PHONE 
+- FIRST NAME 
+- CREATED DATE 
+ 
+  
+ The customer can create an additional user for his company, for this he needs to click 
+on the “Add User” button. 
+ 
+
+
+=== PAGE 8 ===
+
+On the page for creating a user, the customer needs to fill in the user data. And in the 
+form on the right side, put check boxes to the appropriate settings and permissions, and click 
+the “Save” button. 
+ 
+ After that, the created user will appear in the members list. 
+ The customer can also edit a previously created user. To do this, he needs to select 
+a user from the table and click the "Edit" button. Next, you need to edit the required fields 
+and click "Save" 
+ 
+ 
+
+
+=== PAGE 9 ===
+
+6. Action Log 
+On this page, the customer can see the actions performed with users on the "Members 
+List" page (i.e. adding, editing or deleting a user). The following information is displayed in the 
+logs table: 
+- DATE 
+- AUTHOR 
+- COMMENT 
+ 
+ 
+ 
+7. Password change 
+ The client can change the password by clicking on the context menu of his personal 
+profile in the upper right corner and selecting the "Password" link in the drop-down list. 
+ 
+ A modal window will open to change the password. The client needs to enter the 
+current password, new password and confirm the new password. 
+
+
+=== PAGE 10 ===
+
+ 
+ 
+ 
+8. Exit from the personal cabinet 
+The user needs to click on the “Logout” in the context menu, in the upper right corner, 
+to exit your personal account. 
+ 
+ 
+ In the modal window that opens, confirm the exit by clicking the “Yes” button. 
+ 
+
+
+=== PAGE 11 ===
+
+ 
+ 
+ 
+9. Footer 
+Links for the social MHP networks, terms and conditions, user manual and  technical  
+requests and complaints are available in the footer section. 
+ 
+ 
+ 
+ 
+ 
+ 
+10. Dashboard 
+The user gets to the dashboard after successful authorization. If the user is on any 
+other page, he can go to the dashboard page by clicking on the Dashboard item in the header 
+menu or clicking on the MHP logo. 
+
+
+=== PAGE 12 ===
+
+ 
+ 10.1 Financial Indicators 
+The user can see financial indicators on the dashboard: 
+- Credit limit 
+- Receivables 
+- Overdue receivables 
+- Available limit 
+ 
+ Customers can have multiple sales organizations. The customer needs to click on the 
+selector with the displayed sales organization and select the required organization from the 
+drop-down list to choose financial indicators for an appropriate sales organization. 
+ 
+ 
+
+
+=== PAGE 13 ===
+
+ 10.2 Recent Shipments 
+The dashboard displays shipments for the last 3 months, to view shipments for a longer 
+period, go to the Shipments List tab. The following information is displayed in the  recent 
+shipments table: 
+- ORDER ID 
+- SHIPMENTS 
+- QUANTITY 
+- AMOUNT 
+- STATUS 
+ 
+The customer can  see more information about orders by clicking on the “Details” 
+button. 
+ 
+
+
+=== PAGE 14 ===
+
+ 
+ 10.3 News and Slider 
+A slider can be displayed on the dashboard 
+ 
+The dashboard also displays four latest news items. 
+ 
+ 
+ 
+ 10.4 Licenses 
+If the customer license expires, a message will be displayed on the dashboard under 
+the slider, after clicking on "See my licenses" the customer will go to the licenses page 
+
+
+=== PAGE 15 ===
+
+ 
+ 
+11. Products Catalog 
+ To get acquainted with samples of products the company presents, the user must 
+select the "Product Catalog" section: 
+ 
+On the main page of the section: 
+1. Using the search field, you can find the desired product (whether it is presented on the 
+portal) 
+2. Browse products according to the categories they belong to. 
+3. Get acquainted with the list of brands presented by the company. 
+ 
+Attention: the presented list of products and their characteristics are incomplete.Check the 
+details with the manager. 
+When using the search field, it is sufficient to start entering the first characters of the query to 
+be found, and possible options appear on the screen: 
+
+
+=== PAGE 16 ===
+
+ 
+The search window works exclusively inside the section.  
+Select a product in the search field, the page is updated, which displays a sample of 
+products, a sample of packaging, you can also view more detailed information about the 
+parameters of freezing, storage, dimensions of transport packaging. 
+To view products, click on one of the Categories blocks : 
+ Further processing product 
+ Frozen сhicken products 
+ New products 
+ Customized products  
+During technical work on the portal and development of catalog pages, a message will be 
+displayed when clicking on a block: "This part is under development».  
+For the convenience of viewing products in the catalog, a filter block is implemented: 
+Category 
+ 
+Subcategory 
+The total number of subcategories depends on the selected category 
+
+
+=== PAGE 17 ===
+
+ 
+Subcategories are also displayed at the top of the page and are active filters:
+ 
+Primary package 
+ 
+Product State 
+ 
+Filters can be used simultaneously to search for the required products. 
+When applying filters, the page is updated. 
+
+
+=== PAGE 18 ===
+
+After refreshing the page, available product cards are displayed in the middle according to 
+the applied filter:
+ 
+On the page, it is possible to change the display order of products from a tile to a list:
+  
+It is possible to set the number of products on the page: 12, 24, All. 
+At the bottom of the page, you can switch between pages and load more products for 
+viewing: 
+ 
+If necessary, it is possible to view product cards by applying a more detailed set of filters to 
+view products.    
+It is possible to remove all filters, change them and return to the previous page using the 
+controls at the top of the page. 
+
+
+=== PAGE 19 ===
+
+ 
+After making sure that the necessary filtering is applied, click on the product card. 
+After the update, the pages are available for viewing: 
+1. Switch between pages, to return to the previous pages 
+2. Examples of packaging 
+3. Product sample 
+ 
+The page contains a list of more detailed information about the selected product:
+ 
+The catalog does not contain all products available for order, and is advertising material.  
+
+
+=== PAGE 20 ===
+
+For details and to order, contact your manager. 
+12. Customized Product 
+On the "Customized Product" page, the customer can create a request for his 
+customized product. He needs to go to the page and click the “Create Order” button to create 
+a request.  
+ 
+On the page for creating a customized product, the customer needs to fill  in all the 
+necessary fields and click the “Submit Request” button.  
+ 
+ 
+The customized product request is successfully submitted and is displayed in the 
+custom product request table. 
+
+
+=== PAGE 21 ===
+
+ 
+ 
+Status: 
+In Review - the request is under consideration by the Sales Department; 
+Analysis - request is under consideration by R&D and production department; 
+Accepted - request accepted, the product will be produced; 
+Declined - request declined, the product will not be produced; 
+13. Shipments list 
+The client can see shipments history on the Shipments list page.  
+ 
+ 
+● The shipment history is loaded for the last three months by default.   
+● The customer can specify the period of shipments history in the Period field.  
+
+
+=== PAGE 22 ===
+
+● The user needs to choose the required organization from the drop -down list to view 
+shipments history for an appropriate sales organization.  
+● The user needs to choose the required country from the drop -down list to view 
+shipments history for a specific country.  
+● The user needs to choose the required ship to party from the drop -down list to view 
+shipments history for a specific ship to party.  
+● The user will see the filtering results after selecting all the necessary filters and clicking 
+on the “Get list” button.  
+ 
+ 
+The user can see the following information on the shipments list table: 
+- Order ID 
+- Shipments  
+- Quantity  
+- Amount 
+- Status  
+ 
+ 
+Shipments are sorted by order ID by default.  
+
+
+=== PAGE 23 ===
+
+ 
+The list can be sorted by other characteristics, which are available in the drop-down: 
+-  Quantity  
+-  Amount 
+-  Status  
+ 
+ 
+ 
+ 
+
+
+=== PAGE 24 ===
+
+The user can view more information about specific delivery in "Shipments List" by 
+clicking on the "arrow" icon or button “Details”. 
+ 
+ 
+The user can see the following additional information on the expanded list of 
+shipments: 
+-  Container No 
+-  Sea Line 
+-  Port of destination 
+-  Shipping Date 
+-  ETD 
+-  ETA 
+ 
+ 
+Each shipment can also be expanded by clicking on the “arrow” icon, and information 
+about the product in this shipment can be viewed.  
+
+
+=== PAGE 25 ===
+
+ 
+ 
+Information about the product: 
+- Name 
+- Quantity 
+- Amount  
+ 
+14.  Sales Plan 
+The client needs to select the appropriate menu item in the header menu to go to the 
+Sales plan page. 
+ 
+ 
+The client can see the sales plan on the “Sales plan” page.  
+
+
+=== PAGE 26 ===
+
+ 
+ 
+● The sales plan history is loaded for the current month/year by default. 
+● The customer can specify the month/year of sales plan history in the “Month” and 
+“Year” fields.  
+● The user needs to choose the required organization from the drop-down list to view a 
+sales plan for an appropriate sales organization.  
+● To view a sales plan for a specific country, the user needs to choose the required 
+country from the drop-down list.  
+● To view a sales plan for a specific ship to party, the user needs to choose the required 
+ship to party from the drop-down list.  
+● To view a sales plan in a required UOM (tonnes or currency), the user needs to choose 
+the UOM from the drop-down list.  
+● The user will see the filtering results after selecting all the necessary filters and clicking 
+on the “Get list” button. 
+ 
+ 
+The user can see the following information on the sales plan table:  
+- Country  
+- SKU  
+- Target  
+- Last month balance  
+
+
+=== PAGE 27 ===
+
+- Shipped  
+- Order in the pipeline 
+- Delta between target and shipped 
+ 
+ 
+The Sales plan is grouped by Country. The list of ships to party in the country can be 
+viewed if a specific country is expanded by clicking on the “arrow” icon or button “Details”. 
+ 
+Each ship to party can also be expanded by clicking on the “arrow'' icon and information 
+about the specific ship to party can be viewed. 
+
+
+=== PAGE 28 ===
+
+ 
+ 
+15. Reports 
+To go to the Reports generating page, the user needs to select the appropriate menu 
+item in the header menu.  
+ 
+15.1 Statement of account report 
+To request the Statement of account report generating, the client needs  select  the 
+period for which he wants to receive the report in the Period field, and click on the “Send to e-
+mail” button. If the user wants to receive a report by e -mail, which is not tied to his account, 
+he can enter an additional e-mail in the “Additional e-mail” field. 
+ 
+
+
+=== PAGE 29 ===
+
+ 
+15.2 Account receivables report  
+To request the Accounts receivables report generating, the client needs select the date for 
+which he wants to receive the report in the Period field, and click on the “Send to e -mail” 
+button. If the user wants to receive a report by e-mail, which is not tied to his account, he can 
+enter an additional e -mail in the “Additional e -mail” field.
+ 
+16. News 
+The customer can see news and updates on the MHP, by going to the news page 
+ 
+ 
+To view details about the news, the customer needs to select the desired news and 
+click on the "Details" button. 
+
+
+=== PAGE 30 ===
+
+ 
+To exit the news page, the user needs to scroll down the news and press the "Back 
+to News" button 
+ 
+ 
+ 
+ 
+17. Claims and Requests 
+
+
+=== PAGE 31 ===
+
+To create a request for information on products, certificates and to create a claim, the 
+user needs to select the Claims and Requests section.
+ 
+On the main page of the section: 
+1. It is possible to choose the required request form 
+2. Find a previously created request\complaint by number or name 
+3. Find the necessary request/complaint in the list using filtering 
+ 
+All records on the main page have a date of creation, a number, information about the 
+service and the object of the request, and a status that changes accordingly during the review 
+of the request/complaint: 
+ 
+View information about the selected record in a short format, possibly by clicking on 
+the arrow next to the date. 
+
+
+=== PAGE 32 ===
+
+ 
+The company's response to the request (if available) is also displayed in a short form. 
+The number of fields and content in the short form differs depending on the request. 
+By clicking on the inscription "Details", a transition is made to the page of the selected 
+record, where, according to the fields of the form, the information provided by the author (portal 
+user\customer\client) is displayed. The ability to edit and make changes is not possible. 
+Forms for requests/complaints differ among themselves both in terms of the number 
+of fields and their obligation to fill them out. 
+To start filling out the form, just click on the button with the form's name. For example 
+"Claims Form" 
+ 
+The block of information "Personal data" is the same in all forms. Information on the 
+client is filled in automatically. All fields are editable except "Email". 
+The next block in the Claims Form is General Information 
+
+
+=== PAGE 33 ===
+
+ 
+● If there is a "*" sign next to the field, it means that the field is mandatory, and if there 
+is no information in it, the form will not be saved on the portal. 
+● The field next to which there is no "*" mark can be filled in as desired. 
+● When there is an arrow in the field for filling, it means that there is a list for selection in 
+the field, and it is possible to fill it only by choosing one of the proposed values. 
+Block Product description:
+ 
+● On all forms where the "Product Name" field is present, it is filled in automatically after 
+filling in the "Product Article" field. 
+● In some fields there are hints on the data filling format, such as the date, where the 
+system will set the separators, or the weight, where the separator is a dot, after which 
+it is possible to specify 4 more characters. 
+● The "Add Product" button allows you to add up to 10 products to 1 request form. 
+Complaint Details block:
+ 
+
+
+=== PAGE 34 ===
+
+● Depending on the form, the "Description" field may be required or optional. Text field 
+without punctuation and language restrictions. It is recommended to use up to 1000 
+characters. 
+● The "Attach" button allows you to add files. After saving the form, it will also be possible 
+to view the files when opening the form by clicking "Details". 
+● The "Additional contact" field is a field for adding an e -mail to which, if necessary, a 
+copy of the response to the request should be sent. 
+● "Send" button - when pressed, the form with filled fields is saved and automatically 
+forwarded to the responsible employees for consideration. The form will not be saved 
+if at least one of the required fields is not filled in.  
+Info Request form 
+The block of information "Personal data" is identical in all forms. 
+In the form, it is possible to choose the direction of the application. 
+ 
+The appearance and content will also change depending on the selected type of form. 
+The principle of filling the fields and their algorithm remains similar to that described in the 
+"Claims Form". 
+
+
+=== PAGE 35 ===
+
+For example, several forms:
+ 
+ 
+ 
+  
+After saving, the forms are processed by responsible employees. The user will receive 
+a notification in the bell about each change in the status of the request/complaint. 
+
+
+=== PAGE 36 ===
+
+ 
+  
+ 
