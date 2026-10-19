@@ -175,6 +175,9 @@ enum Permission {
   MANAGE_MEMBERS
   VIEW_REPORTS
   DOWNLOAD_DOCUMENTS
+  CLIENT_MANAGEMENT
+  VIEW_CLIENTS
+  VIEW_LOGS
 }
 
 enum CustomProductStatus {
@@ -194,22 +197,40 @@ enum ShipmentStatus {
 }
 
 enum ClaimStatus {
-  SUBMITTED
+  REGISTERED
   UNDER_REVIEW
   INVESTIGATION
+  CLARIFICATION_REQUIRED
+  PARTLY_ACCEPTED
   ACCEPTED
   REJECTED
-  RESOLVED
+  COMPLETED
 }
 
 enum ClaimType {
-  QUALITY_DEFECT
-  SHORT_WEIGHT
-  PACKAGING_DAMAGE
-  TEMPERATURE_ABUSE
-  MISSING_DOCUMENTS
-  GENERAL_INQUIRY
-  CERTIFICATE_REQUEST
+  CLAIM
+  INFO_REQUEST
+}
+
+enum InfoRequestCategory {
+  QUESTIONNAIRE
+  DOCS_SPECIFICATION
+  DOCS_SURVEY_REPORT
+  DOCS_CERTIFICATE
+  DOCS_DECLARATION_QUALITY
+  DOCS_DECLARATION_SHELF_LIFE
+  DOCS_DECLARATION_LEGISLATION
+  DOCS_DECLARATION_OTHER
+  OTHER_QUALITY_SAFETY
+  OTHER_AUDIT
+  OTHER_CLARIFYING_INFO
+}
+
+enum FreezingType {
+  BLOCK_FROZEN
+  IQF
+  BLAST_FROZEN
+  CHILLED
 }
 
 enum UnitOfMeasure {
@@ -548,58 +569,74 @@ model SalesPlan {
 // -------------------------------------------------------------
 
 model Claim {
-  id                 String             @id @default(uuid())
-  claimNumber        String             @unique // e.g. "CLM-2026-0042"
-  companyId          String
-  company            Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  submittedById      String
-  submittedBy        User               @relation(fields: [submittedById], references: [id], onDelete: Cascade)
+  id                           String               @id @default(uuid())
+  claimNumber                  String               @unique // e.g. "CLM-2026-0042" or "REQ-2026-001"
+  companyId                    String
+  company                      Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  submittedById                String
+  submittedBy                  User                 @relation(fields: [submittedById], references: [id], onDelete: Cascade)
   
-  type               ClaimType
-  status             ClaimStatus        @default(SUBMITTED)
+  type                         ClaimType            @default(CLAIM)
+  status                       ClaimStatus          @default(REGISTERED)
+  subject                      String
+  categoryOfRequest            String?              // e.g. "Underload", "Quality Defect", "Shortage"
+  supplierName                 String?              // Supplier / Processing plant selected
   
-  // References
-  shipmentId         String?
-  shipment           Shipment?          @relation(fields: [shipmentId], references: [id], onDelete: SetNull)
-  containerNumber    String?
-  invoiceNumber      String?
-  deliveryDate       DateTime?
+  // Info Request Specific Fields
+  infoCategory                 InfoRequestCategory?
+  targetCountry                String?
+  requestedShelfLifeDate       DateTime?
+  reasonForShelfLifeExtension  String?              @db.Text
+  shelfLifeExtensionVolumeKg   Decimal?             @db.Decimal(12, 4)
 
-  description        String             @db.Text
-  additionalEmail    String?
-  companyResponse    String?            @db.Text
-  resolvedAt         DateTime?
+  // Shipment / Order References
+  shipmentId                   String?
+  shipment                     Shipment?            @relation(fields: [shipmentId], references: [id], onDelete: SetNull)
+  containerNumber              String?
+  invoiceNumber                String?
+  deliveryDate                 DateTime?
+
+  description                  String?              @db.Text
+  additionalEmails             String?              // Semicolon-separated list of additional recipient emails
+  companyResponse              String?              @db.Text
+  resolvedAt                   DateTime?
   
-  products           ClaimProductItem[]
-  attachments        ClaimAttachment[]
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
+  products                     ClaimProductItem[]
+  attachments                  ClaimAttachment[]
+  createdAt                    DateTime             @default(now())
+  updatedAt                    DateTime             @updatedAt
 
   @@index([companyId])
   @@index([status])
 }
 
 model ClaimProductItem {
-  id              String   @id @default(uuid())
-  claimId         String
-  claim           Claim    @relation(fields: [claimId], references: [id], onDelete: Cascade)
-  productId       String
-  product         Product  @relation(fields: [productId], references: [id])
-  affectedWeightKg Decimal @db.Decimal(10, 2)
-  batchNumber     String?
-  productionDate  DateTime?
+  id                   String    @id @default(uuid())
+  claimId              String
+  claim                Claim     @relation(fields: [claimId], references: [id], onDelete: Cascade)
+  productId            String?
+  product              Product?  @relation(fields: [productId], references: [id])
+  productArticle       String    // e.g. "8320L" (check in invoice)
+  productName          String    // Auto-filled after entering article
+  producerName         String?   // "The Product Producer"
+  country              String?
+  productionDate       DateTime?
+  lotNumber            String?
+  vehicleNumber        String?   // Max 100 chars
+  nonConformWeightKg   Decimal   @db.Decimal(12, 4) // Format 00.0000
+  receivedQuantityKg   Decimal?  @db.Decimal(12, 4) // Format 00.0000
 
   @@index([claimId])
 }
 
 model ClaimAttachment {
-  id           String   @id @default(uuid())
-  claimId      String
-  claim        Claim    @relation(fields: [claimId], references: [id], onDelete: Cascade)
-  fileName     String
-  fileUrl      String   // Cloudflare R2 Key
+  id            String   @id @default(uuid())
+  claimId       String
+  claim         Claim    @relation(fields: [claimId], references: [id], onDelete: Cascade)
+  fileName      String
+  fileUrl       String   // Cloudflare R2 Key
   fileSizeBytes Int
-  createdAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
 
   @@index([claimId])
 }

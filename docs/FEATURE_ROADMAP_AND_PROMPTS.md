@@ -27,7 +27,7 @@ This document breaks down the development of the B2B Export Portal into isolated
   - `FEAT-2.2`: Financial KPI Cards & Multi-Sales Organization Selector
   - `FEAT-2.3`: Recent Shipments Widget (Last 3 Months) with Fast Drilldown
   - `FEAT-2.4`: Hero Announcement Slider & News Cards
-  - `FEAT-2.5`: Compliance & License Expiration Alert Banner (SFDA Saudi Arabia)
+  - `FEAT-2.5`: Contextual Action Alert Banner (Shipments Updates & License Expiry Alerts)
 - **Module 3: Digital Product Catalog & Specifications**
   - `FEAT-3.1`: Live Instant Autocomplete Search
   - `FEAT-3.2`: Multi-Facet Filter Engine (Category, Subcategory, Packaging, State, Brand)
@@ -126,18 +126,19 @@ Implement FEAT-1.1: Build login, two-factor authentication (2FA) verification, f
 
 ---
 
-#### `FEAT-1.2`: Multi-Company Context Switcher (Parent & Related Subsidiaries)
-- **Scope**: Global dropdown in the header allowing users belonging to a parent organization (e.g., LuLu Group) to switch active company context between subsidiaries (LuLu Dubai, LuLu Riyadh, LuLu Egypt). Persists active company in a secure cookie and refreshes all page data.
+#### `FEAT-1.2`: Multi-Company Context Switcher with Counterpart Search
+- **Scope**: Global dropdown in the header on the left allowing users belonging to a parent organization (e.g., LuLu Group) to switch active company context between subsidiaries (LuLu Dubai, LuLu Riyadh, LuLu Egypt). Dropdown features a dedicated real-time search field labeled `Counterpart:` with a magnifying glass search icon (`Q`) to filter subsidiaries. Persists active company in a secure cookie and refreshes all page data.
 - **Files**: `src/components/common/CompanySwitcher.tsx`, `src/server/actions/company.actions.ts`, `src/lib/company-context.ts`, `tests/components/CompanySwitcher.test.tsx`, `tests/server/company.actions.test.ts`.
 - **Acceptance Criteria**:
-  1. Header shows current active company name and country flag/indicator.
-  2. Dropdown lists all subsidiaries linked via `parentCompanyId`.
-  3. Clicking a company updates the `active_company_id` cookie and triggers server revalidation.
-  4. Non-admin users without cross-subsidiary permissions cannot switch to unauthorized entities.
-  5. Unit tests achieve >=90% coverage.
+  1. Header shows current active company name and country flag/indicator on the top left.
+  2. Dropdown flyout features a search input labeled `Counterpart:` with magnifying glass icon `Q` that filters companies in real time.
+  3. Dropdown lists all subsidiaries linked via `parentCompanyId` matching the filter.
+  4. Clicking a company updates the `active_company_id` cookie and triggers server revalidation of all dashboard, shipment, and financial data.
+  5. Non-admin users without cross-subsidiary permissions cannot switch to unauthorized entities.
+  6. Unit tests achieve >=90% coverage.
 - **Short Prompt**:
 ```text
-Implement FEAT-1.2: Build Related Companies switcher in src/components/common/CompanySwitcher.tsx and src/server/actions/company.actions.ts. Allow parent company users to switch context between subsidiaries via a secure cookie, revalidating data. Write unit tests with >=90% coverage.
+Implement FEAT-1.2: Build Related Companies switcher in src/components/common/CompanySwitcher.tsx and src/server/actions/company.actions.ts with a 'Counterpart:' live search input and icon, allowing parent company users to filter and switch context between subsidiaries via a secure cookie, revalidating data. Write unit tests with >=90% coverage.
 ```
 
 ---
@@ -242,17 +243,17 @@ Implement FEAT-2.1: Build authenticated portal shell layout in src/app/(portal)/
 ---
 
 #### `FEAT-2.2`: Financial KPI Cards & Multi-Sales Organization Selector
-- **Scope**: Financial indicators widget on dashboard showing Credit Limit, Receivables, Overdue Receivables, and Available Limit in USD, with a dropdown selector for clients with multiple sales organizations.
+- **Scope**: Financial indicators widget on dashboard showing Credit Limit, Receivables, Overdue Receivables, and Available Limit in USD, with a dropdown selector for clients with multiple sales organizations. Available Limit supports negative values (deficit) when receivables exceed credit limit.
 - **Files**: `src/components/dashboard/FinancialCards.tsx`, `src/components/dashboard/SalesOrgSelector.tsx`, `src/server/actions/financials.actions.ts`, `tests/components/FinancialCards.test.tsx`.
 - **Acceptance Criteria**:
   1. Renders 4 cards: Credit Limit, Receivables, Overdue Receivables, Available Limit.
   2. Overdue Receivables highlights in red/amber if > 0.
-  3. Available Limit is formatted with positive green styling.
+  3. Available Limit is formatted with positive green styling when >= 0, and critical red deficit styling when negative (e.g., `-$272,796.96 USD`).
   4. Switching Sales Organization dropdown updates the KPI card numbers instantly via Server Action.
   5. Unit tests achieve >=90% coverage.
 - **Short Prompt**:
 ```text
-Implement FEAT-2.2: Build Financial KPI widget in src/components/dashboard/FinancialCards.tsx and SalesOrgSelector.tsx displaying Credit Limit, Receivables, Overdue Receivables, and Available Limit with multi-sales org switching. Write unit tests with >=90% coverage.
+Implement FEAT-2.2: Build Financial KPI widget in src/components/dashboard/FinancialCards.tsx and SalesOrgSelector.tsx displaying Credit Limit, Receivables, Overdue Receivables, and Available Limit (with positive green styling and negative deficit red styling) with multi-sales org switching. Write unit tests with >=90% coverage.
 ```
 
 ---
@@ -288,18 +289,18 @@ Implement FEAT-2.4: Build Hero Announcement Slider and 4-item News Grid widgets 
 
 ---
 
-#### `FEAT-2.5`: Compliance & License Expiration Alert Banner (SFDA Saudi Arabia)
-- **Scope**: Dynamic warning banner displayed under the dashboard slider when an active company's regulatory license (e.g., Saudi SFDA Import Permit) is expiring within 30 days or has expired.
+#### `FEAT-2.5`: Contextual Action Alert Banner (Shipments Updates & License Expiry Alerts)
+- **Scope**: Dynamic warning banner displayed directly under the dashboard slider supporting dual alert triggers: (1) Shipments updates alert notifying client of status changes with action button `See my shipments`, and (2) Regulatory license expiry alert (SFDA / import permits) expiring within 30 days or already expired with action button `See my licenses`.
 - **Files**: `src/components/dashboard/LicenseAlertBanner.tsx`, `src/app/(portal)/settings/licenses/page.tsx`, `tests/components/LicenseAlertBanner.test.tsx`.
 - **Acceptance Criteria**:
-  1. Evaluates all licenses for the active company; if `expiryDate - now <= 30 days`, renders alert banner.
-  2. Banner displays license name, expiry date, and "See my licenses" action button.
-  3. Clicking navigates to `/settings/licenses` where user can view and download compliance certs.
-  4. Banner is hidden if all licenses are valid (>30 days).
+  1. Trigger 1 (Shipments Update): If recent shipments have status updates, displays banner: "Dear Partner, We have some shipments updates for you. Please, check your shipments." with action button `See my shipments` linking to `/shipments`.
+  2. Trigger 2 (License Expiry): If active company has regulatory licenses expiring within 30 days or expired, displays banner: "Please, notice: Your licence document will expire in 2 weeks." with action button `See my licenses` linking to `/settings/licenses`.
+  3. Banner renders directly beneath hero slider and dismisses appropriately or navigates to target module.
+  4. Banner is hidden if all shipments are reviewed and all licenses are valid (>30 days).
   5. Unit tests achieve >=90% coverage.
 - **Short Prompt**:
 ```text
-Implement FEAT-2.5: Build Compliance License Expiration Alert Banner in src/components/dashboard/LicenseAlertBanner.tsx and licenses view in src/app/(portal)/settings/licenses/page.tsx. Trigger warning if license expires within 30 days. Write unit tests with >=90% coverage.
+Implement FEAT-2.5: Build Contextual Action Alert Banner in src/components/dashboard/LicenseAlertBanner.tsx supporting both Shipments Updates ('Dear Partner, We have some shipments updates...') and License Expiry alerts ('Your licence document will expire in 2 weeks...') with 'See my shipments' and 'See my licenses' action buttons. Write unit tests with >=90% coverage.
 ```
 
 ---
@@ -348,18 +349,19 @@ Implement FEAT-3.2: Build Catalog Landing Page with 4 Category hero cards and Br
 
 ---
 
-#### `FEAT-3.3`: Catalog Grid / List Toggle, Sorting & Pagination (12, 24, All)
-- **Scope**: View controls allowing users to switch between grid card view and dense list table view, select page size (12, 24, or All), sort by name or SKU, and navigate pages.
+#### `FEAT-3.3`: Catalog Grid / List Toggle, Sorting, Dual Pagination & Disclaimer Banner
+- **Scope**: View controls allowing users to switch between grid card view and dense list table view, select page size (12, 24, or All), sort by name or SKU, navigate pages with dual pagination (`Load More Products` button and numbered `< 1 2 >` controls), and display the official catalog incomplete characteristics disclaimer banner.
 - **Files**: `src/components/catalog/CatalogViewControls.tsx`, `src/components/catalog/ProductGrid.tsx`, `src/components/catalog/ProductTable.tsx`, `tests/components/CatalogView.test.tsx`.
 - **Acceptance Criteria**:
-  1. Toggle button switches between Card Grid layout and List Table layout.
-  2. Page size selector supports 12, 24, and All.
-  3. Next/Prev pagination buttons disable appropriately at boundaries.
-  4. Displays loading skeleton during page transitions.
-  5. Unit tests achieve >=90% coverage.
+  1. Toggle button switches between Card Grid layout and List Table layout with green active state indicator.
+  2. Page size selector supports `12`, `24`, and `All`.
+  3. Implements dual pagination: a prominent `Load More Products` button (with circular reload icon) and numbered page switcher `< 1 2 >`.
+  4. Renders catalog informational disclaimer banner at the top/bottom: "Attention: the presented list of products and their characteristics are incomplete. Check the details with the manager. The catalog does not contain all products available for order, and is advertising material."
+  5. Displays loading skeleton during page transitions and disables Next/Prev buttons appropriately at boundaries.
+  6. Unit tests achieve >=90% coverage.
 - **Short Prompt**:
 ```text
-Implement FEAT-3.3: Build catalog view controls (Grid vs List toggle, items per page: 12/24/All, sorting, pagination) in src/components/catalog/CatalogViewControls.tsx. Write unit tests with >=90% coverage.
+Implement FEAT-3.3: Build catalog view controls (Grid vs List toggle, items per page: 12/24/All, sorting, dual pagination with 'Load More Products' and '< 1 2 >' buttons, and the official incomplete characteristics disclaimer banner) in src/components/catalog/CatalogViewControls.tsx. Write unit tests with >=90% coverage.
 ```
 
 ---
@@ -537,33 +539,36 @@ Implement FEAT-6.3: Build sales plan forecast calculations in src/lib/sales-plan
 
 ### Module 7: Financial Reports Center
 
-#### `FEAT-7.1`: Statement of Account Report Generator (Date Range, On-Demand PDF & Email Dispatch)
-- **Scope**: Statement of Account generation interface supporting custom date range selection, direct PDF download, and automated email dispatch with an "Additional Email" recipient field.
+#### `FEAT-7.1`: Statement of Account Report Generator (Date Range, On-Demand PDF/Excel & Email Dispatch)
+- **Scope**: Statement of Account generation interface supporting custom date range selection, direct PDF and Excel (`.xlsx`) downloads, and automated email dispatch with an "Additional Email" recipient field and explanatory partner notice.
 - **Files**: `src/app/(portal)/reports/page.tsx`, `src/components/reports/StatementReportCard.tsx`, `src/server/actions/reports.actions.ts`, `src/lib/email.ts`, `tests/server/reports.actions.test.ts`.
 - **Acceptance Criteria**:
-  1. Allows selecting From Date and To Date.
-  2. User can enter an optional secondary email address for report dispatch.
-  3. "Send to e-mail" button triggers background PDF compilation and email transmission.
-  4. "Download PDF" button directly exports branded Statement of Account.
-  5. Unit tests achieve >=90% coverage.
+  1. Allows selecting From Date and To Date using an interactive calendar picker (`Period`).
+  2. User can enter an optional secondary email address in `Additional e-mail` field for report dispatch.
+  3. Displays explanatory note: "The report will be sent to the email specified in your account. To send a report to an additional email, add it to the appropriate field."
+  4. "Send to e-mail" button triggers background compilation and email transmission to both primary and additional emails.
+  5. Action buttons: "Download PDF" and "Download Excel" directly export branded Statement of Account in `.pdf` and `.xlsx` formats.
+  6. Unit tests achieve >=90% coverage.
 - **Short Prompt**:
 ```text
-Implement FEAT-7.1: Build Statement of Account generator in src/components/reports/StatementReportCard.tsx and src/server/actions/reports.actions.ts supporting custom period, direct PDF export, and secondary email delivery. Write unit tests with >=90% coverage.
+Implement FEAT-7.1: Build Statement of Account generator in src/components/reports/StatementReportCard.tsx and src/server/actions/reports.actions.ts supporting custom period, direct PDF/Excel exports, explanatory notice, and secondary email delivery. Write unit tests with >=90% coverage.
 ```
 
 ---
 
 #### `FEAT-7.2`: Accounts Receivables Aging Report (Aging Buckets: Current, 1-30, 31-60, 61-90, >90 Days)
-- **Scope**: Accounts Receivables Aging report generator supporting as-of date selection, aging bracket categorization, direct export, and email dispatch.
+- **Scope**: Accounts Receivables Aging report generator supporting as-of date selection in the `Period` field, secondary email recipient in `Additional e-mail` field, aging bracket categorization (Current, 1–30, 31–60, 61–90, >90 Days), direct PDF/Excel export, and email dispatch.
 - **Files**: `src/components/reports/ReceivablesReportCard.tsx`, `src/lib/aging-calc.ts`, `tests/lib/aging-calc.test.ts`.
 - **Acceptance Criteria**:
-  1. Select As-Of date (defaults to today).
-  2. Calculates totals across 5 aging buckets: Current, 1–30 Days, 31–60 Days, 61–90 Days, >90 Days overdue.
-  3. Generates downloadable Excel / PDF report and sends to user email.
-  4. Unit tests achieve >=90% coverage.
+  1. Select As-Of date using calendar picker in the `Period` field (defaults to today).
+  2. Input field `Additional e-mail` allows specifying a secondary email address to receive the aging report.
+  3. Calculates aging breakdown across 5 aging buckets: Current, 1–30 Days, 31–60 Days, 61–90 Days, >90 Days overdue.
+  4. "Send to e-mail" button dispatches report to primary and secondary emails.
+  5. Action buttons: "Download Excel" and "Download PDF" directly export the aging report in `.xlsx` and `.pdf` formats.
+  6. Unit tests achieve >=90% coverage.
 - **Short Prompt**:
 ```text
-Implement FEAT-7.2: Build Accounts Receivables Aging Report in src/components/reports/ReceivablesReportCard.tsx and aging calculator in src/lib/aging-calc.ts with 5 aging brackets and email dispatch. Write unit tests with >=90% coverage.
+Implement FEAT-7.2: Build Accounts Receivables Aging Report in src/components/reports/ReceivablesReportCard.tsx and aging calculator in src/lib/aging-calc.ts with Period date picker, Additional e-mail input, 5 aging brackets, direct PDF/Excel exports, and email dispatch. Write unit tests with >=90% coverage.
 ```
 
 ---

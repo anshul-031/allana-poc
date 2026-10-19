@@ -78,8 +78,9 @@ Development must proceed sequentially according to foundational dependencies. Th
   - [ ] Implement `/forgot-password` and password reset token validation.
   - [ ] Write unit tests in `tests/server/auth.actions.test.ts` with >=90% coverage.
 
-- [ ] **FEAT-1.2: Multi-Company Context Switcher**
-  - [ ] Build header dropdown `CompanySwitcher.tsx`.
+- [ ] **FEAT-1.2: Multi-Company Context Switcher with Counterpart Search**
+  - [ ] Build header dropdown `CompanySwitcher.tsx` on the top left.
+  - [ ] Add `Counterpart:` live search input with search icon (`Q`) to filter subsidiaries in real time.
   - [ ] Set up secure `active_company_id` cookie handler.
   - [ ] Ensure all subsequent queries filter strictly by the active company context.
   - [ ] Write unit tests with >=90% coverage.
@@ -131,7 +132,7 @@ Development must proceed sequentially according to foundational dependencies. Th
   - [ ] Write unit tests with >=90% coverage across Header and Footer.
 
 - [ ] **FEAT-2.2: Financial KPI Cards & Multi-Sales Org Selector**
-  - [ ] Build `FinancialCards.tsx` (Credit Limit, Receivables, Overdue, Available with negative support).
+  - [ ] Build `FinancialCards.tsx` (Credit Limit, Receivables, Overdue, Available with positive green and negative deficit red styling).
   - [ ] Build `SalesOrgSelector.tsx` dropdown.
   - [ ] Update card metrics on sales org change via Server Action.
   - [ ] Write unit tests with >=90% coverage.
@@ -147,10 +148,10 @@ Development must proceed sequentially according to foundational dependencies. Th
   - [ ] Build `NewsGrid.tsx` rendering 4 latest news cards with `All News >` header link.
   - [ ] Write unit tests with >=90% coverage.
 
-- [ ] **FEAT-2.5: Contextual Action Alert Banner (Shipments & License Expiry)**
-  - [ ] Build `LicenseAlertBanner.tsx` beneath hero slider.
-  - [ ] Trigger Shipments Alert ("Dear Partner, We have some shipments updates...") with `See my shipments` button.
-  - [ ] Trigger License Warning if active company license expires within 30 days with `See my licenses` button.
+- [ ] **FEAT-2.5: Contextual Action Alert Banner (Shipments Updates & License Expiry Alerts)**
+  - [ ] Build `LicenseAlertBanner.tsx` directly beneath hero slider.
+  - [ ] Trigger Shipments Alert ("Dear Partner, We have some shipments updates for you...") with `See my shipments` button.
+  - [ ] Trigger License Warning if active company license expires within 30 days ("Please, notice: Your licence document will expire in 2 weeks.") with `See my licenses` button.
   - [ ] Write unit tests with >=90% coverage.
 
 ---
@@ -172,10 +173,11 @@ Development must proceed sequentially according to foundational dependencies. Th
   - [ ] Sync filter parameters with browser URL query string.
   - [ ] Write unit tests with >=90% coverage.
 
-- [ ] **FEAT-3.3: Catalog Grid / List Toggle, Sorting & Dual Pagination**
-  - [ ] Build `CatalogViewControls.tsx` (Card Grid vs Table List toggle).
+- [ ] **FEAT-3.3: Catalog Grid / List Toggle, Sorting, Dual Pagination & Disclaimer Banner**
+  - [ ] Build `CatalogViewControls.tsx` (Card Grid vs Table List toggle with green indicator).
   - [ ] Implement page size selector (12, 24, All).
   - [ ] Build dual pagination: `Load More Products` button (with circular reload icon) and numbered `< 1 2 >` controls.
+  - [ ] Display official incomplete characteristics disclaimer banner ("Attention: the presented list of products and their characteristics are incomplete...").
   - [ ] Write unit tests with >=90% coverage.
 
 - [ ] **FEAT-3.4: Product Detail Page (PDP): Breadcrumbs, Packaging Switcher & 10-Column Logistics Specs**
@@ -261,16 +263,19 @@ Development must proceed sequentially according to foundational dependencies. Th
 
 ### Module 7: Financial Reports Center
 
-- [ ] **FEAT-7.1: Statement of Account Report Generator**
-  - [ ] Build Statement of Account request card with date range picker.
-  - [ ] Implement "Additional Email" input field.
-  - [ ] Generate downloadable PDF and trigger transactional email.
+- [ ] **FEAT-7.1: Statement of Account Report Generator (Date Range, PDF/Excel & Email)**
+  - [ ] Build Statement of Account request card with calendar date range picker (`Period`).
+  - [ ] Implement `Additional e-mail` field for secondary recipient dispatch with explanatory note.
+  - [ ] Action buttons: "Download PDF" and "Download Excel" directly export `.pdf` and `.xlsx` reports.
+  - [ ] "Send to e-mail" button triggers background compilation and dual email transmission.
   - [ ] Write unit tests with >=90% coverage.
 
-- [ ] **FEAT-7.2: Accounts Receivables Aging Report**
-  - [ ] Build Receivables report card with as-of date selector.
-  - [ ] Calculate aging brackets: Current, 1–30, 31–60, 61–90, >90 Days.
-  - [ ] Export report to Excel / PDF and send via email.
+- [ ] **FEAT-7.2: Accounts Receivables Aging Report (Aging Buckets & PDF/Excel Export)**
+  - [ ] Build Receivables report card with as-of date selector in the `Period` field.
+  - [ ] Implement `Additional e-mail` input field for secondary recipient.
+  - [ ] Calculate aging brackets: Current, 1–30, 31–60, 61–90, >90 Days overdue.
+  - [ ] Action buttons: "Download Excel" and "Download PDF" export `.xlsx` and `.pdf` files.
+  - [ ] "Send to e-mail" button dispatches aging report to primary and secondary emails.
   - [ ] Write unit tests with >=90% coverage.
 
 ---
