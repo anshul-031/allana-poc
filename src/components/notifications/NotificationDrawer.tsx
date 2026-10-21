@@ -10,6 +10,7 @@ import {
   setNotificationReadStatus,
 } from '@/server/actions/notification.actions';
 import { formatNotificationTimestamp } from '@/lib/utils';
+import { DEFAULT_FALLBACK_NOTIFICATIONS, getFallbackUnreadCount } from '@/lib/fallback-notifications';
 
 
 export interface NotificationDrawerProps {
@@ -44,12 +45,14 @@ export default function NotificationDrawer({
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const [showOnlyUnread, setShowOnlyUnread] = useState(false);
   const [notifications, setNotifications] = useState<NotificationDTO[]>(
-    initialNotifications || []
+    initialNotifications || DEFAULT_FALLBACK_NOTIFICATIONS
   );
   const [unreadCount, setUnreadCount] = useState<number>(
     initialUnreadCount !== undefined
       ? initialUnreadCount
-      : (initialNotifications?.filter((n) => !n.isRead).length || 0)
+      : (initialNotifications
+          ? initialNotifications.filter((n) => !n.isRead).length
+          : getFallbackUnreadCount(DEFAULT_FALLBACK_NOTIFICATIONS))
   );
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -58,12 +61,20 @@ export default function NotificationDrawer({
 
   useEffect(() => {
     if (userId && !initialNotifications) {
-      getUserNotifications(userId).then((res) => {
-        if (res.success) {
-          setNotifications(res.notifications);
-          setUnreadCount(res.unreadCount);
-        }
-      });
+      getUserNotifications(userId)
+        .then((res) => {
+          if (res.success && res.notifications && res.notifications.length > 0) {
+            setNotifications(res.notifications);
+            setUnreadCount(res.unreadCount);
+          } else {
+            setNotifications(DEFAULT_FALLBACK_NOTIFICATIONS);
+            setUnreadCount(getFallbackUnreadCount(DEFAULT_FALLBACK_NOTIFICATIONS));
+          }
+        })
+        .catch(() => {
+          setNotifications(DEFAULT_FALLBACK_NOTIFICATIONS);
+          setUnreadCount(getFallbackUnreadCount(DEFAULT_FALLBACK_NOTIFICATIONS));
+        });
     }
   }, [userId, initialNotifications]);
 

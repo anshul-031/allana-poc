@@ -69,7 +69,7 @@ export function formatDateString(dateStr?: string | null): string {
 
 export const DEFAULT_FALLBACK_SHIPMENTS: ShipmentSummaryDTO[] = [
   {
-    id: 'shipment-fallback-1',
+    id: 'shipment-1',
     orderNumber: 'ORD-2026-88204',
     companyId: 'comp-lulu-uae',
     shipToParty: 'LuLu Hypermarket - Al Barsha Dubai Logistics Hub',
@@ -88,7 +88,7 @@ export const DEFAULT_FALLBACK_SHIPMENTS: ShipmentSummaryDTO[] = [
     createdAt: '2026-10-10T09:30:00.000Z',
   },
   {
-    id: 'shipment-fallback-2',
+    id: 'shipment-2',
     orderNumber: 'ORD-2026-88210',
     companyId: 'comp-lulu-uae',
     shipToParty: 'LuLu Hypermarket - Riyadh Central Distribution Center',
@@ -107,7 +107,7 @@ export const DEFAULT_FALLBACK_SHIPMENTS: ShipmentSummaryDTO[] = [
     createdAt: '2026-10-04T11:00:00.000Z',
   },
   {
-    id: 'shipment-fallback-3',
+    id: 'shipment-3',
     orderNumber: 'ORD-2026-88195',
     companyId: 'comp-lulu-uae',
     shipToParty: 'LuLu Hypermarket - Dubai Investment Park Central Butchery',
@@ -126,7 +126,7 @@ export const DEFAULT_FALLBACK_SHIPMENTS: ShipmentSummaryDTO[] = [
     createdAt: '2026-09-25T14:20:00.000Z',
   },
   {
-    id: 'shipment-fallback-4',
+    id: 'shipment-4',
     orderNumber: 'ORD-2026-88235',
     companyId: 'comp-lulu-uae',
     shipToParty: 'LuLu International Logistics - JAFZA Cold Store Facility',

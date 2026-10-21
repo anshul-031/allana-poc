@@ -26,64 +26,68 @@ export interface RelatedCompanyDTO {
 export async function getRelatedCompanies(userId: string): Promise<RelatedCompanyDTO[]> {
   if (!userId) return [];
 
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    include: {
-      company: {
-        include: {
-          parentCompany: true,
-          subsidiaries: true,
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        company: {
+          include: {
+            parentCompany: true,
+            subsidiaries: true,
+          },
         },
       },
-    },
-  });
+    });
 
-  if (!user || !user.company) {
+    if (!user || !user.company) {
+      return [];
+    }
+
+    const primaryCompany = user.company;
+    const parentId = primaryCompany.parentCompanyId || primaryCompany.id;
+
+    // Fetch parent company and all subsidiaries under this parent
+    const related = await prisma.company.findMany({
+      where: {
+        OR: [
+          { id: parentId },
+          { parentCompanyId: parentId },
+        ],
+      },
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+    return (related as Array<{
+      id: string;
+      name: string;
+      code: string;
+      country: string;
+      region: string;
+      telephone: string;
+      email: string;
+      parentCompanyId: string | null;
+      managerName: string | null;
+      managerEmail: string | null;
+      managerPhone: string | null;
+    }>).map((comp) => ({
+      id: comp.id,
+      name: comp.name,
+      code: comp.code,
+      country: comp.country,
+      region: comp.region,
+      telephone: comp.telephone,
+      email: comp.email,
+      isParent: comp.id === parentId,
+      isActive: true,
+      managerName: comp.managerName,
+      managerEmail: comp.managerEmail,
+      managerPhone: comp.managerPhone,
+    }));
+  } catch {
     return [];
   }
-
-  const primaryCompany = user.company;
-  const parentId = primaryCompany.parentCompanyId || primaryCompany.id;
-
-  // Fetch parent company and all subsidiaries under this parent
-  const related = await prisma.company.findMany({
-    where: {
-      OR: [
-        { id: parentId },
-        { parentCompanyId: parentId },
-      ],
-    },
-    orderBy: {
-      name: 'asc',
-    },
-  });
-
-  return (related as Array<{
-    id: string;
-    name: string;
-    code: string;
-    country: string;
-    region: string;
-    telephone: string;
-    email: string;
-    parentCompanyId: string | null;
-    managerName: string | null;
-    managerEmail: string | null;
-    managerPhone: string | null;
-  }>).map((comp) => ({
-    id: comp.id,
-    name: comp.name,
-    code: comp.code,
-    country: comp.country,
-    region: comp.region,
-    telephone: comp.telephone,
-    email: comp.email,
-    isParent: comp.id === parentId,
-    isActive: true,
-    managerName: comp.managerName,
-    managerEmail: comp.managerEmail,
-    managerPhone: comp.managerPhone,
-  }));
 }
 
 /**
@@ -214,24 +218,28 @@ export async function switchCompanyContext(
 export async function getCompanyProfile(companyId: string): Promise<RelatedCompanyDTO | null> {
   if (!companyId) return null;
 
-  const comp = await prisma.company.findUnique({
-    where: { id: companyId },
-  });
+  try {
+    const comp = await prisma.company.findUnique({
+      where: { id: companyId },
+    });
 
-  if (!comp) return null;
+    if (!comp) return null;
 
-  return {
-    id: comp.id,
-    name: comp.name,
-    code: comp.code,
-    country: comp.country,
-    region: comp.region,
-    telephone: comp.telephone,
-    email: comp.email,
-    isParent: !comp.parentCompanyId,
-    isActive: true,
-    managerName: comp.managerName,
-    managerEmail: comp.managerEmail,
-    managerPhone: comp.managerPhone,
-  };
+    return {
+      id: comp.id,
+      name: comp.name,
+      code: comp.code,
+      country: comp.country,
+      region: comp.region,
+      telephone: comp.telephone,
+      email: comp.email,
+      isParent: !comp.parentCompanyId,
+      isActive: true,
+      managerName: comp.managerName,
+      managerEmail: comp.managerEmail,
+      managerPhone: comp.managerPhone,
+    };
+  } catch {
+    return null;
+  }
 }

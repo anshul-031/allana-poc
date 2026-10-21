@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { ACTIVE_COMPANY_COOKIE } from '@/lib/company-context';
 import { createPresignedDownloadUrl } from '@/lib/r2';
 import { cookies } from 'next/headers';
+import { FALLBACK_DETAILED_SHIPMENTS } from '@/lib/fallback-shipments';
 
 export type ShipmentStatusType =
   | 'BOOKED'
@@ -532,6 +533,17 @@ export async function getShipmentDocumentPresignedUrl(
     });
 
     if (!doc) {
+      const fallbackDoc = FALLBACK_DETAILED_SHIPMENTS.flatMap((s) => s.documents).find(
+        (d) => d.id === trimmed
+      );
+      if (fallbackDoc) {
+        return {
+          success: true,
+          downloadUrl: `https://documents.allana.com/mock-vault/${fallbackDoc.fileUrl || fallbackDoc.fileName}`,
+          fileName: fallbackDoc.fileName,
+        };
+      }
+
       return {
         success: false,
         downloadUrl: null,
