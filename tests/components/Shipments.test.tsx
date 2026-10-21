@@ -7,6 +7,7 @@ import DocumentVault from '@/components/shipments/DocumentVault';
 import ShipmentsTable from '@/components/shipments/ShipmentsTable';
 import ShipmentsPortalView from '@/components/shipments/ShipmentsPortalView';
 import ShipmentsPage from '@/app/(portal)/shipments/page';
+import ShipmentDetailPage, { generateMetadata } from '@/app/(portal)/shipments/[id]/page';
 import * as shipmentsActions from '@/server/actions/shipments.actions';
 import {
   ShipmentDetailedDTO,
@@ -685,5 +686,147 @@ describe('Module 5: Shipment Tracking & Logistics Vault Components', () => {
         'ORD-2026-88192'
       );
     });
+
+    it('renders ShipmentsPage with fallback consignments when getShipmentsList returns empty or fails', async () => {
+      vi.spyOn(shipmentsActions, 'getShipmentsList').mockResolvedValueOnce({
+        success: false,
+        shipments: [],
+        total: 0,
+        page: 1,
+        pageSize: 10,
+        totalPages: 0,
+        countries: [],
+        salesOrgs: [],
+      });
+
+      const element = await ShipmentsPage();
+      render(element);
+
+      expect(screen.getByTestId('shipments-page')).toBeInTheDocument();
+      expect(screen.getByText('ORD-2026-88204')).toBeInTheDocument();
+    });
+  });
+
+  describe('ShipmentDetailPage & generateMetadata', () => {
+    it('renders ShipmentDetailPage when shipment exists', async () => {
+      vi.spyOn(shipmentsActions, 'getShipmentDetails').mockResolvedValueOnce({
+        success: true,
+        shipment: mockShipment1,
+      });
+
+      const element = await ShipmentDetailPage({
+        params: Promise.resolve({ id: 'ship-1' }),
+      });
+      render(element);
+
+      expect(screen.getByTestId('shipment-detail-page')).toBeInTheDocument();
+      expect(screen.getByText('Consignment ORD-2026-88192')).toBeInTheDocument();
+      expect(screen.getByText(/Consignee: LuLu Logistics JAFZA/)).toBeInTheDocument();
+      expect(screen.getByText('In Transit')).toBeInTheDocument();
+      expect(screen.getByText('48.00 MT')).toBeInTheDocument();
+      expect(screen.getByText('2 Container(s) • 1 Cut SKUs')).toBeInTheDocument();
+      expect(screen.getByText('Maersk Mc-Kinney Moller')).toBeInTheDocument();
+      expect(screen.getByText(/Reefer Container Manifest & Stowage/)).toBeInTheDocument();
+      expect(screen.getByTestId('document-vault-container')).toBeInTheDocument();
+    });
+
+    it('renders not found state when shipment does not exist or fetch fails', async () => {
+      // Case 1: success: false with custom error
+      vi.spyOn(shipmentsActions, 'getShipmentDetails').mockResolvedValueOnce({
+        success: false,
+        shipment: null,
+        error: 'Access denied to this consignment',
+      });
+
+      const element1 = await ShipmentDetailPage({
+        params: Promise.resolve({ id: 'ship-unknown' }),
+      });
+      const { unmount } = render(element1);
+
+      expect(screen.getByTestId('shipment-not-found')).toBeInTheDocument();
+      expect(screen.getByText('Access denied to this consignment')).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: 'Back to All Shipments' })).toBeInTheDocument();
+
+      unmount();
+
+      // Case 2: success: true but shipment: null (fallback message)
+      vi.spyOn(shipmentsActions, 'getShipmentDetails').mockResolvedValueOnce({
+        success: true,
+        shipment: null,
+      });
+
+      const element2 = await ShipmentDetailPage({
+        params: Promise.resolve({ id: 'ship-null' }),
+      });
+      render(element2);
+
+      expect(screen.getByTestId('shipment-not-found')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'The requested shipment consignment could not be found or does not belong to your organization.'
+        )
+      ).toBeInTheDocument();
+    });
+
+    it('generates metadata correctly for ShipmentDetailPage', async () => {
+      // When shipment found
+      vi.spyOn(shipmentsActions, 'getShipmentDetails').mockResolvedValueOnce({
+        success: true,
+        shipment: mockShipment1,
+      });
+
+      const metaFound = await generateMetadata({
+        params: Promise.resolve({ id: 'ship-1' }),
+      });
+      expect(metaFound.title).toBe('ORD-2026-88192 - Consignment Tracking | Allana Portal');
+      expect(metaFound.description?.toLowerCase()).toContain('live container telemetry');
+
+      // When shipment not found
+      vi.spyOn(shipmentsActions, 'getShipmentDetails').mockResolvedValueOnce({
+        success: false,
+        shipment: null,
+      });
+
+      const metaNotFound = await generateMetadata({
+        params: Promise.resolve({ id: 'ship-unknown' }),
+      });
+      expect(metaNotFound.title).toBe('Shipment Details | Allana Customer Portal');
+
+      // When success: true but shipment is null
+      vi.spyOn(shipmentsActions, 'getShipmentDetails').mockResolvedValueOnce({
+        success: true,
+        shipment: null,
+      });
+
+      const metaNull = await generateMetadata({
+        params: Promise.resolve({ id: 'ship-null' }),
+      });
+      expect(metaNull.title).toBe('Shipment Details | Allana Customer Portal');
+    });
+
+    it('renders fallback values when vessel and voyage are null or status is unknown', async () => {
+      const mockShipmentFallback: ShipmentDetailedDTO = {
+        ...mockShipment1,
+        id: 'ship-fallback',
+        status: 'UNKNOWN_STATUS' as any,
+        vesselName: null,
+        voyageNumber: null,
+      };
+
+      vi.spyOn(shipmentsActions, 'getShipmentDetails').mockResolvedValueOnce({
+        success: true,
+        shipment: mockShipmentFallback,
+      });
+
+      const element = await ShipmentDetailPage({
+        params: Promise.resolve({ id: 'ship-fallback' }),
+      });
+      render(element);
+
+      expect(screen.getByText('TBA')).toBeInTheDocument();
+      expect(screen.getByText(/• Voy: TBA/)).toBeInTheDocument();
+      expect(screen.getByText('Booked')).toBeInTheDocument();
+    });
   });
 });
+

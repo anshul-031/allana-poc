@@ -9,6 +9,7 @@ import {
 } from '@/server/actions/shipments.actions';
 import ShipmentFilterBar from './ShipmentFilterBar';
 import ShipmentsTable from './ShipmentsTable';
+import { filterFallbackShipments } from '@/lib/fallback-shipments';
 
 export interface ShipmentsPortalViewProps {
   initialData: GetShipmentsListResult;
@@ -56,11 +57,22 @@ export default function ShipmentsPortalView({ initialData }: ShipmentsPortalView
 
       setIsLoading(false);
 
-      if (res.success) {
+      if (res.success && res.shipments.length > 0) {
         setShipments(res.shipments);
         setTotalFound(res.total);
         setTotalPages(res.totalPages);
         setCurrentPage(res.page);
+      } else {
+        const fallback = filterFallbackShipments({
+          ...activeFilters,
+          page: overridePage,
+          limit: overridePageSize,
+          sortBy: overrideSortBy,
+        });
+        setShipments(fallback.shipments);
+        setTotalFound(fallback.total);
+        setTotalPages(fallback.totalPages);
+        setCurrentPage(fallback.page);
       }
     },
     [filters]

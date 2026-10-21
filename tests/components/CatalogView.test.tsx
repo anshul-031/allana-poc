@@ -379,5 +379,22 @@ describe('CatalogView Components & Page (FEAT-3.3)', () => {
         );
       });
     });
+
+    it('renders fallback mock catalog items when getCatalogProducts returns empty or fails', async () => {
+      vi.mocked(catalogActions.getCatalogProducts).mockResolvedValue({
+        success: false,
+        products: [],
+        total: 0,
+        page: 1,
+        pageSize: 12,
+        totalPages: 0,
+      });
+
+      render(<CatalogPage />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('product-grid')).toBeInTheDocument();
+      });
+    });
   });
 });

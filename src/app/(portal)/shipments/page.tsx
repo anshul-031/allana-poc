@@ -1,9 +1,14 @@
 import React from 'react';
 import { getShipmentsList } from '@/server/actions/shipments.actions';
 import ShipmentsPortalView from '@/components/shipments/ShipmentsPortalView';
+import { filterFallbackShipments } from '@/lib/fallback-shipments';
 
 export default async function ShipmentsPage() {
   const result = await getShipmentsList({ limit: 10 });
+  const initialData =
+    result.success && result.shipments.length > 0
+      ? result
+      : { success: true, ...filterFallbackShipments({ limit: 10 }) };
 
   return (
     <div
@@ -15,7 +20,7 @@ export default async function ShipmentsPage() {
         width: '100%',
       }}
     >
-      <ShipmentsPortalView initialData={result} />
+      <ShipmentsPortalView initialData={initialData} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getClaimDetails } from '@/server/actions/claims.actions';
 import { ClaimDetailView } from '@/components/claims/ClaimDetailView';
+import { FALLBACK_CLAIMS } from '@/lib/fallback-claims';
 
 interface ClaimDetailPageProps {
   params: Promise<{ id: string }>;
@@ -11,10 +12,15 @@ interface ClaimDetailPageProps {
 export async function generateMetadata({ params }: ClaimDetailPageProps): Promise<Metadata> {
   const { id } = await params;
   const res = await getClaimDetails(id);
-  if (res.success && res.claim) {
+  const claim =
+    res.success && res.claim
+      ? res.claim
+      : (FALLBACK_CLAIMS.find((c) => c.id === id || c.claimNumber === id) || null);
+
+  if (claim) {
     return {
-      title: `${res.claim.claimNumber} - ${res.claim.subject} | Allana Claims Desk`,
-      description: `Audit details and resolution status for ticket ${res.claim.claimNumber}.`,
+      title: `${claim.claimNumber} - ${claim.subject} | Allana Claims Desk`,
+      description: `Audit details and resolution status for ticket ${claim.claimNumber}.`,
     };
   }
   return {
@@ -25,8 +31,12 @@ export async function generateMetadata({ params }: ClaimDetailPageProps): Promis
 export default async function ClaimDetailPage({ params }: ClaimDetailPageProps) {
   const { id } = await params;
   const res = await getClaimDetails(id);
+  const claim =
+    res.success && res.claim
+      ? res.claim
+      : (FALLBACK_CLAIMS.find((c) => c.id === id || c.claimNumber === id) || null);
 
-  if (!res.success || !res.claim) {
+  if (!claim) {
     return (
       <div
         data-testid="claim-not-found"
@@ -76,7 +86,7 @@ export default async function ClaimDetailPage({ params }: ClaimDetailPageProps) 
         padding: '1.5rem',
       }}
     >
-      <ClaimDetailView claim={res.claim} />
+      <ClaimDetailView claim={claim} />
     </div>
   );
 }

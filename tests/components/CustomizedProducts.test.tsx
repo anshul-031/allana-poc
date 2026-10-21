@@ -339,5 +339,19 @@ describe('Module 4: Customized Products & NPD Components', () => {
       expect(screen.getByTestId('customized-products-page')).toBeInTheDocument();
       expect(screen.getByTestId('req-number-npd-1')).toHaveTextContent('NPD-2026-001');
     });
+
+    it('renders CustomizedProductsPage with fallback requests when getCustomProductRequests returns empty or fails', async () => {
+      vi.spyOn(npdActions, 'getCustomProductRequests').mockResolvedValueOnce({
+        success: false,
+        requests: [],
+        total: 0,
+      });
+
+      const element = await CustomizedProductsPage();
+      render(element);
+
+      expect(screen.getByTestId('customized-products-page')).toBeInTheDocument();
+      expect(screen.getByText('NPD-2026-014')).toBeInTheDocument();
+    });
   });
 });

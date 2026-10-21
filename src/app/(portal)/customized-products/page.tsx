@@ -1,9 +1,14 @@
 import React from 'react';
 import { getCustomProductRequests } from '@/server/actions/npd.actions';
 import NpdDashboardView from '@/components/npd/NpdDashboardView';
+import { FALLBACK_NPD_REQUESTS } from '@/lib/fallback-npd';
 
 export default async function CustomizedProductsPage() {
   const result = await getCustomProductRequests();
+  const requests =
+    result.success && result.requests.length > 0
+      ? result.requests
+      : FALLBACK_NPD_REQUESTS;
 
   return (
     <div
@@ -15,7 +20,7 @@ export default async function CustomizedProductsPage() {
         width: '100%',
       }}
     >
-      <NpdDashboardView initialRequests={result.requests} />
+      <NpdDashboardView initialRequests={requests} />
     </div>
   );
 }

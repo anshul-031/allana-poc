@@ -150,50 +150,69 @@ export async function getCatalogProducts(
     const limit = options?.limit === 0 || options?.limit === -1 ? 100 : Math.max(1, Math.min(100, options?.limit || 12));
     const skip = (page - 1) * limit;
 
-    const where: any = {};
+    const conditions: any[] = [];
 
     if (options?.category && options.category.trim()) {
       const cat = options.category.trim();
-      where.OR = [
-        { category: { slug: cat } },
-        { category: { name: { contains: cat, mode: 'insensitive' } } },
-      ];
+      conditions.push({
+        OR: [
+          { category: { slug: cat } },
+          { category: { name: { contains: cat, mode: 'insensitive' } } },
+        ],
+      });
     }
 
     if (options?.subcategory && options.subcategory.trim()) {
       const sub = options.subcategory.trim();
-      where.subcategory = {
-        OR: [
-          { slug: sub },
-          { name: { contains: sub, mode: 'insensitive' } },
-        ],
-      };
+      conditions.push({
+        subcategory: {
+          OR: [
+            { slug: sub },
+            { name: { contains: sub, mode: 'insensitive' } },
+          ],
+        },
+      });
     }
 
     if (options?.brand && options.brand.trim()) {
-      where.brand = { contains: options.brand.trim(), mode: 'insensitive' };
+      conditions.push({
+        brand: { contains: options.brand.trim(), mode: 'insensitive' },
+      });
     }
 
     if (options?.packaging && options.packaging.trim()) {
-      where.primaryPackaging = { contains: options.packaging.trim(), mode: 'insensitive' };
+      const pkgTerm = options.packaging.trim();
+      const pkgClean = pkgTerm.replace(/-/g, ' ');
+      conditions.push({
+        OR: [
+          { primaryPackaging: { contains: pkgClean, mode: 'insensitive' } },
+          { primaryPackaging: { contains: pkgTerm, mode: 'insensitive' } },
+        ],
+      });
     }
 
     if (options?.state && options.state.trim()) {
-      where.productState = { contains: options.state.trim(), mode: 'insensitive' };
+      const stateTerm = options.state.trim();
+      conditions.push({
+        OR: [
+          { productState: { contains: stateTerm, mode: 'insensitive' } },
+          { freezingType: { contains: stateTerm, mode: 'insensitive' } },
+        ],
+      });
     }
 
     if (options?.search && options.search.trim()) {
       const s = options.search.trim();
-      where.AND = [
-        {
-          OR: [
-            { name: { contains: s, mode: 'insensitive' } },
-            { sku: { contains: s, mode: 'insensitive' } },
-            { description: { contains: s, mode: 'insensitive' } },
-          ],
-        },
-      ];
+      conditions.push({
+        OR: [
+          { name: { contains: s, mode: 'insensitive' } },
+          { sku: { contains: s, mode: 'insensitive' } },
+          { description: { contains: s, mode: 'insensitive' } },
+        ],
+      });
     }
+
+    const where = conditions.length > 0 ? { AND: conditions } : {};
 
     let orderBy: any = { name: 'asc' };
     if (options?.sortBy === 'name_desc') {

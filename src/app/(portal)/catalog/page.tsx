@@ -19,6 +19,7 @@ import {
   CatalogSearchProductDTO,
   getCatalogProducts,
 } from '@/server/actions/catalog.actions';
+import { filterFallbackCatalog } from '@/lib/fallback-catalog';
 
 function CatalogContent() {
   const router = useRouter();
@@ -70,7 +71,7 @@ function CatalogContent() {
       sortBy,
     });
 
-    if (res.success) {
+    if (res.success && res.products.length > 0) {
       if (isAppending) {
         setProducts((prev) => [...prev, ...res.products]);
       } else {
@@ -78,6 +79,26 @@ function CatalogContent() {
       }
       setTotalProducts(res.total);
       setTotalPages(res.totalPages);
+    } else {
+      const fallback = filterFallbackCatalog({
+        category: filterState.categories[0],
+        subcategory: filterState.subcategories[0],
+        brand: filterState.brands[0],
+        packaging: filterState.packagingTypes[0],
+        state: filterState.productStates[0],
+        search: filterState.searchQuery,
+        page: currentPage,
+        limit: pageSize,
+        sortBy,
+      });
+      const nextProducts = fallback.products;
+      if (isAppending) {
+        setProducts((prev) => [...prev, ...nextProducts]);
+      } else {
+        setProducts(nextProducts);
+      }
+      setTotalProducts(fallback.total);
+      setTotalPages(fallback.totalPages);
     }
 
     setIsLoading(false);

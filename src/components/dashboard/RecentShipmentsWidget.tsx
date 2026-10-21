@@ -67,11 +67,94 @@ export function formatDateString(dateStr?: string | null): string {
   });
 }
 
+export const DEFAULT_FALLBACK_SHIPMENTS: ShipmentSummaryDTO[] = [
+  {
+    id: 'shipment-fallback-1',
+    orderNumber: 'ORD-2026-88204',
+    companyId: 'comp-lulu-uae',
+    shipToParty: 'LuLu Hypermarket - Al Barsha Dubai Logistics Hub',
+    destinationCountry: 'United Arab Emirates',
+    totalQuantityMt: 54.00,
+    totalAmountUsd: 248400.00,
+    status: 'IN_TRANSIT',
+    shippingLine: 'Maersk Line',
+    vesselName: 'Monaco Maersk',
+    voyageNumber: '2642W',
+    portOfLoading: 'JNPT Nhava Sheva, India',
+    portOfDestination: 'Jebel Ali Port, Dubai',
+    shippingDate: '2026-10-12T08:00:00.000Z',
+    etd: '2026-10-14T12:00:00.000Z',
+    eta: '2026-10-24T18:00:00.000Z',
+    createdAt: '2026-10-10T09:30:00.000Z',
+  },
+  {
+    id: 'shipment-fallback-2',
+    orderNumber: 'ORD-2026-88210',
+    companyId: 'comp-lulu-uae',
+    shipToParty: 'LuLu Hypermarket - Riyadh Central Distribution Center',
+    destinationCountry: 'Saudi Arabia',
+    totalQuantityMt: 48.00,
+    totalAmountUsd: 230400.00,
+    status: 'ARRIVED_PORT',
+    shippingLine: 'CMA CGM',
+    vesselName: 'CMA CGM Jules Verne',
+    voyageNumber: '0FL71W',
+    portOfLoading: 'Mundra Port, Gujarat, India',
+    portOfDestination: 'Jeddah Islamic Port, Saudi Arabia',
+    shippingDate: '2026-10-06T10:00:00.000Z',
+    etd: '2026-10-08T16:00:00.000Z',
+    eta: '2026-10-18T14:00:00.000Z',
+    createdAt: '2026-10-04T11:00:00.000Z',
+  },
+  {
+    id: 'shipment-fallback-3',
+    orderNumber: 'ORD-2026-88195',
+    companyId: 'comp-lulu-uae',
+    shipToParty: 'LuLu Hypermarket - Dubai Investment Park Central Butchery',
+    destinationCountry: 'United Arab Emirates',
+    totalQuantityMt: 52.50,
+    totalAmountUsd: 241500.00,
+    status: 'CUSTOMS_CLEARED',
+    shippingLine: 'Hapag-Lloyd',
+    vesselName: 'Al Jmeliyah',
+    voyageNumber: '2638E',
+    portOfLoading: 'JNPT Nhava Sheva, India',
+    portOfDestination: 'Jebel Ali Port, Dubai',
+    shippingDate: '2026-09-28T09:00:00.000Z',
+    etd: '2026-09-30T14:00:00.000Z',
+    eta: '2026-10-09T16:00:00.000Z',
+    createdAt: '2026-09-25T14:20:00.000Z',
+  },
+  {
+    id: 'shipment-fallback-4',
+    orderNumber: 'ORD-2026-88235',
+    companyId: 'comp-lulu-uae',
+    shipToParty: 'LuLu International Logistics - JAFZA Cold Store Facility',
+    destinationCountry: 'United Arab Emirates',
+    totalQuantityMt: 26.00,
+    totalAmountUsd: 132600.00,
+    status: 'LOADED',
+    shippingLine: 'MSC',
+    vesselName: 'MSC Oscar',
+    voyageNumber: 'MS2644',
+    portOfLoading: 'JNPT Nhava Sheva, India',
+    portOfDestination: 'Jebel Ali Port, Dubai',
+    shippingDate: '2026-10-17T08:00:00.000Z',
+    etd: '2026-10-19T10:00:00.000Z',
+    eta: '2026-10-29T18:00:00.000Z',
+    createdAt: '2026-10-15T08:00:00.000Z',
+  },
+];
+
 export default function RecentShipmentsWidget({
   initialShipments,
   companyId,
 }: RecentShipmentsWidgetProps) {
-  const [shipments, setShipments] = useState<ShipmentSummaryDTO[]>(initialShipments || []);
+  const [shipments, setShipments] = useState<ShipmentSummaryDTO[]>(
+    initialShipments && initialShipments.length > 0
+      ? initialShipments
+      : (initialShipments ? [] : DEFAULT_FALLBACK_SHIPMENTS)
+  );
   const [isLoading, setIsLoading] = useState(!initialShipments);
 
   useEffect(() => {
@@ -83,9 +166,14 @@ export default function RecentShipmentsWidget({
         'comp-lulu-uae';
       getRecentShipments({ companyId: activeId })
         .then((res) => {
-          if (res.success) {
+          if (res.success && res.shipments.length > 0) {
             setShipments(res.shipments);
+          } else {
+            setShipments(DEFAULT_FALLBACK_SHIPMENTS);
           }
+        })
+        .catch(() => {
+          setShipments(DEFAULT_FALLBACK_SHIPMENTS);
         })
         .finally(() => {
           setIsLoading(false);

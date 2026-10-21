@@ -300,5 +300,23 @@ describe('FEAT-3.4 Product Detail Page Components', () => {
       expect(screen.getByText('Product Specification Not Found')).toBeInTheDocument();
       expect(screen.getByTestId('return-to-catalog-link')).toHaveAttribute('href', '/catalog');
     });
+
+    it('renders fallback product specification when getProductBySlug fails but slug is in fallback catalog', async () => {
+      vi.spyOn(catalogActions, 'getProductBySlug').mockResolvedValueOnce({
+        success: false,
+        product: null,
+      });
+
+      const element = await ProductDetailPage({
+        params: Promise.resolve({ slug: 'frozen-buffalo-tenderloin-fillet' }),
+      });
+
+      render(element);
+
+      expect(screen.getByTestId('product-detail-view')).toBeInTheDocument();
+      expect(screen.getByTestId('pdp-product-title')).toHaveTextContent(
+        'Frozen Buffalo Tenderloin (Fillet)'
+      );
+    });
   });
 });

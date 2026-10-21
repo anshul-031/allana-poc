@@ -87,6 +87,71 @@ const defaultLogs: AuditLogEntry[] = [
       role: 'FINANCE',
     },
   },
+  {
+    id: 'log-7',
+    action: 'USER_CREATED',
+    comment: 'Added Fahad Al-Otaibi (buyer.ksa@lulumea.com) with Regional Buyer permissions',
+    createdAt: new Date('2026-10-02T10:00:00Z'),
+    author: {
+      id: 'usr-default',
+      firstName: 'Ahmed',
+      lastName: 'Mansoori',
+      email: 'admin.lulu@lulumea.com',
+      role: 'ADMIN',
+    },
+  },
+  {
+    id: 'log-8',
+    action: 'SUBMIT_QUALITY_CLAIM',
+    comment: 'Filed temperature abuse claim CLM-2026-0044 for Jeddah Islamic Port container CMAU8192033',
+    createdAt: new Date('2026-10-07T14:45:00Z'),
+    author: {
+      id: 'usr-qa-ksa',
+      firstName: 'Dr. Abdullah',
+      lastName: 'Al-Shehri',
+      email: 'qa.ksa@lulumea.com',
+      role: 'QA',
+    },
+  },
+  {
+    id: 'log-9',
+    action: 'LICENSE_UPLOADED',
+    comment: 'Uploaded renewed SFDA Meat Import Facility Approval (SFDA-IMP-2024-8841)',
+    createdAt: new Date('2026-10-11T11:20:00Z'),
+    author: {
+      id: 'usr-default',
+      firstName: 'Ahmed',
+      lastName: 'Mansoori',
+      email: 'admin.lulu@lulumea.com',
+      role: 'ADMIN',
+    },
+  },
+  {
+    id: 'log-10',
+    action: 'USER_CREATED',
+    comment: 'Added Salim M.A. (procurement.corp@lulumea.com) as Group Director of Global Procurement',
+    createdAt: new Date('2026-09-28T09:00:00Z'),
+    author: {
+      id: 'usr-corp-dir',
+      firstName: 'M. A.',
+      lastName: 'Yusuff',
+      email: 'director.corp@lulumea.com',
+      role: 'ADMIN',
+    },
+  },
+  {
+    id: 'log-11',
+    action: 'SUBMIT_INFO_REQUEST',
+    comment: 'Submitted Annual Group Vendor ESG & Traceability Audit Questionnaire (REQ-2026-0020)',
+    createdAt: new Date('2026-10-05T16:30:00Z'),
+    author: {
+      id: 'usr-corp-proc',
+      firstName: 'Salim',
+      lastName: 'M.A.',
+      email: 'procurement.corp@lulumea.com',
+      role: 'BUYER',
+    },
+  },
 ];
 
 export default function ActionLogPage(props?: any) {

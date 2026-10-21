@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
-import FinancialCards from '@/components/dashboard/FinancialCards';
+import FinancialCards, { getFallbackFinancials } from '@/components/dashboard/FinancialCards';
 import SalesOrgSelector from '@/components/dashboard/SalesOrgSelector';
 import * as financialsActions from '@/server/actions/financials.actions';
 
@@ -201,6 +201,15 @@ describe('Financial KPI Cards & Sales Org Selector (FEAT-2.2)', () => {
           salesOrgId: undefined,
         });
       });
+    });
+
+    it('returns valid fallback financial metrics using getFallbackFinancials', () => {
+      const fallbackDefault = getFallbackFinancials();
+      expect(fallbackDefault.success).toBe(true);
+      expect(fallbackDefault.financials?.salesOrgCode).toBe('SO-1010');
+
+      const fallbackSpecific = getFallbackFinancials('so-2020');
+      expect(fallbackSpecific.financials?.salesOrgCode).toBe('SO-2020');
     });
   });
 });

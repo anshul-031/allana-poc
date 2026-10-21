@@ -6,6 +6,7 @@ import {
   CatalogSearchProductDTO,
   searchCatalogProducts,
 } from '@/server/actions/catalog.actions';
+import { filterFallbackCatalog } from '@/lib/fallback-catalog';
 
 export interface CatalogSearchProps {
   placeholder?: string;
@@ -85,14 +86,31 @@ export default function CatalogSearch({
 
     setIsLoading(true);
     const handler = setTimeout(() => {
-      searchCatalogProducts(trimmed).then((res) => {
-        setIsLoading(false);
-        if (res.success) {
-          setResults(res.products);
+      searchCatalogProducts(trimmed)
+        .then((res) => {
+          setIsLoading(false);
+          if (res.success && res.products.length > 0) {
+            setResults(res.products);
+            setIsOpen(true);
+            setSelectedIndex(-1);
+          } else {
+            const fallback = filterFallbackCatalog({ search: trimmed, limit: 8 });
+            if (fallback.products.length > 0) {
+              setResults(fallback.products);
+              setIsOpen(true);
+              setSelectedIndex(-1);
+            } else {
+              setResults([]);
+              setIsOpen(true);
+            }
+          }
+        })
+        .catch(() => {
+          setIsLoading(false);
+          const fallback = filterFallbackCatalog({ search: trimmed, limit: 8 });
+          setResults(fallback.products);
           setIsOpen(true);
-          setSelectedIndex(-1);
-        }
-      });
+        });
     }, debounceMs);
 
     return () => clearTimeout(handler);

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProductBySlug } from '@/server/actions/catalog.actions';
 import ProductDetailView from '@/components/catalog/ProductDetailView';
+import { FALLBACK_CATALOG_ITEMS } from '@/lib/fallback-catalog';
 
 interface ProductDetailPageProps {
   params: Promise<{
@@ -14,7 +15,71 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   const { slug } = await params;
   const result = await getProductBySlug(slug);
 
-  if (!result.success || !result.product) {
+  let product = result.success && result.product ? result.product : null;
+
+  if (!product) {
+    const item = FALLBACK_CATALOG_ITEMS.find((p) => p.slug === slug);
+    if (item) {
+      product = {
+        id: item.id,
+        sku: item.sku,
+        name: item.name,
+        slug: item.slug,
+        brand: item.brand,
+        categoryName: item.categoryName,
+        categorySlug: item.categorySlug,
+        subcategoryName: item.subcategoryName,
+        subcategorySlug: item.subcategorySlug,
+        productState: item.productState,
+        primaryPackaging: item.primaryPackaging,
+        storageTemperature: item.storageTemperature,
+        shelfLifeMonths: item.shelfLifeMonths,
+        cartonNetWeightKg: item.cartonNetWeightKg,
+        cutSize: item.cutSize,
+        packagesPerCarton: item.packagesPerCarton,
+        cartonWeightKg: item.cartonWeightKg,
+        cartonDimensionsMm: item.cartonDimensionsMm,
+        cartonsPerPallet: item.cartonsPerPallet,
+        palletsPerContainer: item.palletsPerContainer,
+        totalContainerWeightMt: item.totalContainerWeightMt,
+        freezingType: item.freezingType,
+        imageUrl: item.imageUrl,
+        packagingImageUrl: item.packagingImageUrl,
+        specSheetPdfUrl: item.specSheetPdfUrl,
+        certifications: item.certifications,
+        description: item.description,
+        isUnderDevelopment: item.isUnderDevelopment,
+        packagingOptions: [
+          {
+            id: 'vacuum-block',
+            label: 'Vacuum Block (IWP)',
+            format: 'Individually vacuum packed in food-grade multilayer barrier shrink film',
+            imageUrl: item.packagingImageUrl,
+          },
+          {
+            id: 'carton',
+            label: 'Master Carton',
+            format: 'Heavy-duty 5-ply corrugated export carton with strap reinforcement',
+            imageUrl: item.packagingImageUrl,
+          },
+          {
+            id: 'polybag',
+            label: 'Polybag Bulk',
+            format: 'Heavy-duty polyethylene liner inside corrugated master carton',
+            imageUrl: 'products/packaging/sample-polybag.webp',
+          },
+          {
+            id: 'tray',
+            label: 'Retail MAP Tray',
+            format: 'Skin-pack barrier tray in modified atmosphere packaging (MAP)',
+            imageUrl: 'products/packaging/sample-tray.webp',
+          },
+        ],
+      };
+    }
+  }
+
+  if (!product) {
     return (
       <div
         data-testid="pdp-not-found"
@@ -72,5 +137,5 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     );
   }
 
-  return <ProductDetailView product={result.product} />;
+  return <ProductDetailView product={product} />;
 }

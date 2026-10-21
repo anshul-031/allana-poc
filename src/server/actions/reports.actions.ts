@@ -111,6 +111,42 @@ const SEED_TRANSACTIONS: Omit<StatementTransactionDTO, 'balanceUsd'>[] = [
     debitUsd: 0.0,
     creditUsd: 8500.0,
   },
+  {
+    id: 'tx-5',
+    date: '2026-10-18',
+    docNumber: 'INV-2026-88204',
+    docType: 'INVOICE',
+    description: 'Export Shipment ORD-2026-88204 (28 MT Primal Cuts - Jeddah)',
+    debitUsd: 135600.0,
+    creditUsd: 0.0,
+  },
+  {
+    id: 'tx-6',
+    date: '2026-10-20',
+    docNumber: 'PAY-77290',
+    docType: 'PAYMENT',
+    description: 'Confirmed Irrevocable LC Settlement Swift Ref: FAB-LC-260481 (Abu Dhabi)',
+    debitUsd: 0.0,
+    creditUsd: 220800.0,
+  },
+  {
+    id: 'tx-7',
+    date: '2026-10-22',
+    docNumber: 'INV-2026-88250',
+    docType: 'INVOICE',
+    description: 'Export Shipment ORD-2026-88250 (Retail Goat Cuts MAP Trays)',
+    debitUsd: 178560.0,
+    creditUsd: 0.0,
+  },
+  {
+    id: 'tx-8',
+    date: '2026-10-25',
+    docNumber: 'CR-1048',
+    docType: 'CREDIT_MEMO',
+    description: 'Commercial Price Adjustment Claim Settlement CLM-2026-0038',
+    debitUsd: 0.0,
+    creditUsd: 14200.0,
+  },
 ];
 
 /**
@@ -161,6 +197,33 @@ const SEED_AGING_INVOICES = [
     dueDate: '2026-06-11', // Overdue by >120 days (>90 bracket)
     amountUsd: 42000.0,
     paidAmountUsd: 12000.0, // Outstanding: $30,000
+  },
+  {
+    id: 'inv-6',
+    invoiceNumber: 'INV-2026-88204',
+    orderNumber: 'ORD-2026-88204',
+    invoiceDate: '2026-10-18',
+    dueDate: '2026-11-17',
+    amountUsd: 135600.0,
+    paidAmountUsd: 0.0,
+  },
+  {
+    id: 'inv-7',
+    invoiceNumber: 'INV-2026-88250',
+    orderNumber: 'ORD-2026-88250',
+    invoiceDate: '2026-10-22',
+    dueDate: '2026-11-21',
+    amountUsd: 178560.0,
+    paidAmountUsd: 50000.0,
+  },
+  {
+    id: 'inv-8',
+    invoiceNumber: 'INV-2026-88301',
+    orderNumber: 'ORD-2026-88301',
+    invoiceDate: '2026-10-19',
+    dueDate: '2026-11-18',
+    amountUsd: 145000.0,
+    paidAmountUsd: 0.0,
   },
 ];
 

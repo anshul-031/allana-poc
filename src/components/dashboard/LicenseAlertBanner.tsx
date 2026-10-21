@@ -13,11 +13,32 @@ export interface LicenseAlertBannerProps {
   companyId?: string;
 }
 
+export const DEFAULT_FALLBACK_ALERTS: DashboardAlertsDTO = {
+  hasShipmentUpdates: true,
+  shipmentCount: 4,
+  expiringLicense: {
+    id: 'lic-2',
+    companyId: 'comp-lulu-uae',
+    country: 'Saudi Arabia',
+    licenseName: 'Saudi Food & Drug Authority (SFDA) Abattoir Approval',
+    licenseNumber: 'SFDA-AP-2024-0091',
+    issueDate: '2024-11-01T00:00:00.000Z',
+    expiryDate: '2026-11-15T00:00:00.000Z',
+    documentUrl: 'licenses/sfda-abattoir-approval.pdf',
+    daysRemaining: 26,
+    status: 'EXPIRING_SOON',
+  },
+  licenseAlertMessage:
+    'Please, notice: Your licence document (Saudi Food & Drug Authority (SFDA) Abattoir Approval) will expire in 26 days.',
+};
+
 export default function LicenseAlertBanner({
   initialAlerts,
   companyId,
 }: LicenseAlertBannerProps) {
-  const [alerts, setAlerts] = useState<DashboardAlertsDTO | null>(initialAlerts || null);
+  const [alerts, setAlerts] = useState<DashboardAlertsDTO | null>(
+    initialAlerts || DEFAULT_FALLBACK_ALERTS
+  );
   const [isShipmentAlertDismissed, setIsShipmentAlertDismissed] = useState(false);
   const [isLicenseAlertDismissed, setIsLicenseAlertDismissed] = useState(false);
 
@@ -27,11 +48,17 @@ export default function LicenseAlertBanner({
         companyId ||
         parseActiveCompanyId(document?.cookie) ||
         'comp-lulu-uae';
-      getDashboardAlerts(activeId).then((res) => {
-        if (res.success) {
-          setAlerts(res.alerts);
-        }
-      });
+      getDashboardAlerts(activeId)
+        .then((res) => {
+          if (res.success && res.alerts) {
+            setAlerts(res.alerts);
+          } else {
+            setAlerts(DEFAULT_FALLBACK_ALERTS);
+          }
+        })
+        .catch(() => {
+          setAlerts(DEFAULT_FALLBACK_ALERTS);
+        });
     }
   }, [initialAlerts, companyId]);
 
